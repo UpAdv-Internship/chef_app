@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:up_dev_chef_app/features/splash/presentation/screens/splash_screen.dart';
 
 class Routes {
   static const String intitlRoute = '/';
@@ -16,11 +16,12 @@ class Routes {
 
   static const String signUpMoreInfo = '/signUpMoreInfo';
 }
-  class AppRoutes {
-    static Route? generateRoute(RouteSettings routeSettings) {
-      switch (routeSettings.name) {
-      //case Routes.intitlRoute:
-      // return MaterialPageRoute(builder: (_) => const SplashScreen());
+
+class AppRoutes {
+  static Route? generateRoute(RouteSettings routeSettings) {
+    switch (routeSettings.name) {
+      case Routes.intitlRoute:
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
 
       //case Routes.login:
       //     return MaterialPageRoute(builder: (_) => const LoginScreen());
@@ -39,6 +40,8 @@ class Routes {
 
       // case Routes.signUpMoreInfo:
       //     return MaterialPageRoute(builder: (_) => const signUpMoreInfoScreen());
-      }
+      default:
+        return null;
     }
   }
+}
