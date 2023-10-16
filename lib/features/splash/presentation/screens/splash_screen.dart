@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:up_dev_chef_app/core/utils/app_assets.dart';
-import 'package:up_dev_chef_app/core/utils/app_colors.dart';
 import 'package:up_dev_chef_app/core/utils/app_router.dart';
 import 'package:up_dev_chef_app/core/utils/app_strings.dart';
 import 'package:up_dev_chef_app/core/utils/commons.dart';
@@ -29,6 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return SafeArea(
       child: Scaffold(
           body: Stack(
+            fit: StackFit.expand,
         children: [
           Image.asset(
             AppAssets.background,
@@ -43,9 +43,9 @@ class _SplashScreenState extends State<SplashScreen> {
                 const SizedBox(
                   height: 5,
                 ),
-                const Text(
+                  Text(
                   AppStrings.chafApp,
-                  style: TextStyle(fontSize: 24, color: AppColors.white),
+                  style: Theme.of(context).textTheme.displayLarge,
                 ),
               ],
             ),
