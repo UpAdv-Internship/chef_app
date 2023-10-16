@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:up_dev_chef_app/core/utils/app_text_styles.dart';
 
 import '../utils/app_colors.dart';
 
@@ -9,7 +10,11 @@ ThemeData getAppTheme() {
     //!appBar theme
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.primary,
-
+    ),
+    //text theme
+    textTheme: TextTheme(
+      displayLarge: boldStyle(color: AppColors.white),
+      displayMedium: regularStyle(),
     ),
     //!elevatedButton theme
     elevatedButtonTheme: ElevatedButtonThemeData(
@@ -34,7 +39,7 @@ ThemeData getAppTheme() {
         borderRadius: BorderRadius.circular(8),
       ),
       //?hint
-    //  hintStyle: CustomTextStyles.latoStyle16,         // create CustomTextStyles in app_text_styles
+      //  hintStyle: CustomTextStyles.latoStyle16,         // create CustomTextStyles in app_text_styles
     ),
   );
 }
