@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:up_dev_chef_app/features/auth/presentation/screens/login_screen.dart';
 import 'package:up_dev_chef_app/features/auth/presentation/screens/signup_screen.dart';
 import 'package:up_dev_chef_app/features/splash/presentation/screens/splash_screen.dart';
 
@@ -28,10 +27,10 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const SplashScreen());
 
       case Routes.login:
-          return MaterialPageRoute(builder: (_) => LoginScreen());
+        return MaterialPageRoute(builder: (_) => const LoginScreen());
 
       case Routes.signUp:
-          return MaterialPageRoute(builder: (_) => const SignUpScreen());
+        return MaterialPageRoute(builder: (_) => const SignUpScreen());
 
       // case Routes.signUpProfile:
       //     return MaterialPageRoute(builder: (_) => const signUpProfileScreen());
