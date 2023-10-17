@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:up_dev_chef_app/app/app.dart';
 
-import 'features/auth/presentation/screens/login_screen22.dart';
+
 import 'features/profile/presentation/screens/login_screen.dart';
 import 'features/splash/presentation/screens/splash_screen.dart';
 
