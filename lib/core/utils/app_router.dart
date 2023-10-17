@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:up_dev_chef_app/features/auth/presentation/screens/signup_screen.dart';
 import 'package:up_dev_chef_app/features/splash/presentation/screens/splash_screen.dart';
 
-import '../../features/profile/presentation/screens/login_screen.dart';
+import '../../features/auth/presentation/screens/login_screen.dart';
 
 class Routes {
   static const String intitlRoute = '/';
