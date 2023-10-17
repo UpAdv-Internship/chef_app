@@ -8,7 +8,7 @@ class ChefApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.intitlRoute,
+      initialRoute: Routes.signUp,
       onGenerateRoute: AppRoutes.generateRoute,
     );
   }
