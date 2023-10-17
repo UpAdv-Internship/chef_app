@@ -3,6 +3,8 @@ import 'package:up_dev_chef_app/features/auth/presentation/screens/login_screen.
 import 'package:up_dev_chef_app/features/auth/presentation/screens/signup_screen.dart';
 import 'package:up_dev_chef_app/features/splash/presentation/screens/splash_screen.dart';
 
+import '../../features/profile/presentation/screens/login_screen.dart';
+
 class Routes {
   static const String intitlRoute = '/';
 
@@ -26,7 +28,7 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const SplashScreen());
 
       case Routes.login:
-          return MaterialPageRoute(builder: (_) => const LoginScreen());
+          return MaterialPageRoute(builder: (_) => LoginScreen());
 
       case Routes.signUp:
           return MaterialPageRoute(builder: (_) => const SignUpScreen());
