@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void navigateAfterThreeSeconds() {
     Future.delayed(const Duration(seconds: 3)).then((value) async {
-      navigate(context: context, route: Routes.login);
+      navigate(context: context, route: Routes.signUp);
     });
   }
   @override
