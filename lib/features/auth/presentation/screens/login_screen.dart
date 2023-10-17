@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:up_dev_chef_app/core/theme/app_theme.dart';
 import 'package:up_dev_chef_app/core/utils/app_colors.dart';
+import 'package:up_dev_chef_app/core/utils/app_router.dart';
+import 'package:up_dev_chef_app/core/utils/commons.dart';
 import 'package:up_dev_chef_app/features/auth/presentation/cubits/cubit/login_cubit.dart';
 import 'package:up_dev_chef_app/features/auth/presentation/cubits/cubit/login_state.dart';
 
@@ -183,7 +185,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    navigate(context: context, route: Routes.signUp);
+                                  },
                                   child: const Text(
                                     AppStrings.createEmail,
                                     style: TextStyle(color: AppColors.primary),
