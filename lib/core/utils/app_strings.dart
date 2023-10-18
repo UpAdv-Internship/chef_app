@@ -44,4 +44,8 @@ class AppStrings {
   static const String medicalCertificateCanExtractFromNerest =
       'الشهادة الصحية ممكن تستخرجها بسهولة من لقرب مكتب صحة';
   static const String save = 'حفظ';
+  static const String brandName = 'اسم البراند';
+  static const String minimumCharge = 'الحد الأدنى للطلب';
+  static const String description = 'وصف';
+  static const String updateProfile = 'تحديث الحساب';
 }
