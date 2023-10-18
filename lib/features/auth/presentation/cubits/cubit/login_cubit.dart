@@ -24,10 +24,7 @@ bool isLoginPasswordsShowing = true;
         isLoginPasswordsShowing ? Icons.visibility : Icons.visibility_off;
     emit(ChangeLoginPasswordSuffixIcon());
   }
-
-
-
-
+  
   LoginModel? loginModel;
   void login() async {
     emit(LoginLoadingState());
