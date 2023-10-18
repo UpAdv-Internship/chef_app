@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:up_dev_chef_app/core/Widgets/custom_text_field.dart';
 import 'package:up_dev_chef_app/core/utils/app_strings.dart';
@@ -49,4 +48,3 @@ class SignUpStep1 extends StatelessWidget {
     );
   }
 }
-

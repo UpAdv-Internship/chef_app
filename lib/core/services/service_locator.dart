@@ -5,6 +5,7 @@ import 'package:up_dev_chef_app/core/databases/api/dio_consumer.dart';
 import 'package:up_dev_chef_app/core/databases/cache/cache_helper.dart';
 import 'package:up_dev_chef_app/features/auth/data/repository/auth_repo.dart';
 import 'package:up_dev_chef_app/features/auth/presentation/cubits/cubit/login_cubit.dart';
+import 'package:up_dev_chef_app/features/auth/presentation/cubits/cubit/signup_cubit.dart';
 
 final sl = GetIt.instance;
 void initServiceLocator() {
@@ -13,5 +14,5 @@ void initServiceLocator() {
   sl.registerLazySingleton(() => Dio());
   sl.registerLazySingleton(() => AuthRepository());
   sl.registerLazySingleton(() => LoginCubit(sl()));
-
+  sl.registerLazySingleton(() => SignupCubit());
 }
