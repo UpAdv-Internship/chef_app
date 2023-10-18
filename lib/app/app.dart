@@ -11,7 +11,7 @@ class ChefApp extends StatelessWidget {
     return ScreenUtilInit(
         designSize: const Size(375, 812),
         builder: (context, child) {
-          return MaterialApp(
+          return MaterialApp(            
             theme: getAppTheme(),
             debugShowCheckedModeBanner: false,
             initialRoute: Routes.intitlRoute,
