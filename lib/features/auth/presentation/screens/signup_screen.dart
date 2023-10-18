@@ -13,18 +13,12 @@ import 'package:up_dev_chef_app/features/auth/presentation/components/signup_ste
 import 'package:up_dev_chef_app/features/auth/presentation/cubits/cubit/signup_cubit.dart';
 import 'package:up_dev_chef_app/features/auth/presentation/cubits/cubit/signup_state.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
-}
-
-class _SignUpScreenState extends State<SignUpScreen> {
-  int currentStep = 0;
-
-  @override
   Widget build(BuildContext context) {
+    final signUpCubit = BlocProvider.of<SignupCubit>(context);
     return BlocConsumer<SignupCubit, SignupState>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -52,7 +46,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Icon(Icons.flag),
                       Icon(Icons.document_scanner_outlined),
                     ],
-                    activeStep: currentStep,
+                    activeStep: signUpCubit.currentStep,
                     activeStepColor: AppColors.orange,
                     stepReachedAnimationEffect: Curves.ease,
                     enableStepTapping: false,
@@ -67,7 +61,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       physics: const BouncingScrollPhysics(),
                       itemCount: 1,
                       itemBuilder: (context, index) {
-                        switch (currentStep) {
+                        switch (signUpCubit.currentStep) {
                           case 0:
                             return const SignUpStep1();
                           case 1:
@@ -91,24 +85,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     // Next Button
                     ElevatedButton(
                       onPressed: () {
-                        currentStep == 3
+                        signUpCubit.currentStep == 3
                             ? null //! Add Navigator to home page
-                            : setState(() {
-                                currentStep++;
-                              });
+                            : signUpCubit.increaseStepperIndex();
                       },
-                      child: Text(
-                          currentStep == 3 ? AppStrings.save : AppStrings.next),
+                      child: Text(signUpCubit.currentStep == 3
+                          ? AppStrings.save
+                          : AppStrings.next),
                     ),
                     const SizedBox(width: 20),
                     // Previous Button
-                    currentStep == 0
+                    signUpCubit.currentStep == 0
                         ? Container()
                         : ElevatedButton(
                             onPressed: () {
-                              setState(() {
-                                currentStep--;
-                              });
+                              signUpCubit.decreaseStepperIndex();
                             },
                             child: const Text(AppStrings.previous),
                           ),

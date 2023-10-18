@@ -1,6 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:up_dev_chef_app/core/common/commons.dart';
 import 'package:up_dev_chef_app/core/utils/app_assets.dart';
 import 'package:up_dev_chef_app/core/utils/app_colors.dart';
 import 'package:up_dev_chef_app/core/utils/app_strings.dart';
@@ -32,7 +33,9 @@ class SignUpStep2 extends StatelessWidget {
               Positioned(
                 bottom: 0,
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    pickImage(ImageSource.camera);
+                  },
                   child: const CircleAvatar(
                     backgroundColor: AppColors.grey,
                     child: Icon(
@@ -62,4 +65,3 @@ class SignUpStep2 extends StatelessWidget {
     );
   }
 }
-
