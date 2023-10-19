@@ -26,5 +26,7 @@ final class LogoutErrorState extends ProfileState {
 
 final class LogoutLoadingState extends ProfileState {}
 
+final class TakePhotoSuccessState extends ProfileState {}
+
 
 

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:up_dev_chef_app/core/utils/app_assets.dart';
@@ -8,6 +9,8 @@ import 'package:up_dev_chef_app/core/utils/app_colors.dart';
 import 'package:up_dev_chef_app/core/utils/app_router.dart';
 import 'package:up_dev_chef_app/core/utils/commons.dart';
 import 'package:up_dev_chef_app/core/widgets/custom_text_icon_button.dart';
+import 'package:up_dev_chef_app/features/profile/presentation/cubits/profile_cubit/profile_cubit.dart';
+import 'package:up_dev_chef_app/features/profile/presentation/cubits/profile_cubit/profile_state.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,7 +20,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -82,7 +84,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       InkWell(
                         onTap: () {
                           navigate(
-                              context: context, route: Routes.updateProfileScreen);
+                              context: context,
+                              route: Routes.updateProfileScreen);
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -133,27 +136,39 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
 
                       //تسجيل الخروج
-                      InkWell(
-                        onTap: () {},
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Icon(
-                              Icons.arrow_back_ios,
-                              color: AppColors.grey,
+                      BlocConsumer<ProfileCubit, ProfileState>(
+                        listener: (context, state) {
+                          if (state is LogoutSuccessState) {
+                            navigateReplacment(
+                                context: context, route: Routes.login);
+                          }
+                        },
+                        builder: (context, state) {
+                          return InkWell(
+                            onTap: (){
+                              BlocProvider.of<ProfileCubit>(context).logout();
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Icon(
+                                  Icons.arrow_back_ios,
+                                  color: AppColors.grey,
+                                ),
+                                CustomTextButtonIcon(
+                                  onPressed: () {},
+                                  icon: const Text(
+                                    'تسجيل الخروج',
+                                    style: TextStyle(color: AppColors.grey),
+                                  ),
+                                  label: const Icon(
+                                    Icons.logout,
+                                  ),
+                                ),
+                              ],
                             ),
-                            CustomTextButtonIcon(
-                              onPressed: () {},
-                              icon: const Text(
-                                'تسجيل الخروج',
-                                style: TextStyle(color: AppColors.grey),
-                              ),
-                              label: const Icon(
-                                Icons.logout,
-                              ),
-                            ),
-                          ],
-                        ),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -165,5 +180,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
 }

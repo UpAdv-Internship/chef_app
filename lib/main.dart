@@ -4,7 +4,9 @@ import 'package:up_dev_chef_app/app/app.dart';
 import 'package:up_dev_chef_app/core/databases/cache/cache_helper.dart';
 import 'package:up_dev_chef_app/core/services/service_locator.dart';
 import 'package:up_dev_chef_app/features/auth/presentation/cubits/cubit/login_cubit.dart';
-void main() async{
+import 'package:up_dev_chef_app/features/profile/presentation/cubits/profile_cubit/profile_cubit.dart';
+
+void main() async {
   //Sa33eed
   //7okaa
   //SA33EDD
@@ -13,10 +15,8 @@ void main() async{
   await sl<CacheHelper>().init();
   runApp(MultiBlocProvider(
     providers: [
-      BlocProvider(
-         create: (context) => sl<LoginCubit>(),
-      ),
-      
+      BlocProvider(create: (context) => sl<LoginCubit>()),
+      BlocProvider(create: (context) => sl<ProfileCubit>()),
     ],
     child: const ChefApp(),
   ));

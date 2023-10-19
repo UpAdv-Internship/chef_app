@@ -9,6 +9,12 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   final ProfileRepo profileRepo;
 
+  //! take photo
+  void takePhoto(value) {
+    image = value;
+    emit(TakePhotoSuccessState());
+  }
+
   //! Update Profile
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();

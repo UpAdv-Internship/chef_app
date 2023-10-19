@@ -42,7 +42,7 @@ class ProfileRepo {
   Future<Either<String, String>> logout() async {
     try {
       final res = await sl<ApiConsumer>().get(EndPoint.logout);
-      return Right(res.data[Apikeys.message]);
+      return Right(res.data![Apikeys.message]);
     } on ServerException catch (e) {
       return Left(e.errorModel.errorMessage);
     }
