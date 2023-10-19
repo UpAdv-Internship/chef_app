@@ -4,20 +4,23 @@ import 'package:up_dev_chef_app/app/app.dart';
 import 'package:up_dev_chef_app/core/databases/cache/cache_helper.dart';
 import 'package:up_dev_chef_app/core/services/service_locator.dart';
 import 'package:up_dev_chef_app/features/auth/presentation/cubits/cubit/login_cubit.dart';
-void main() async{
-  //Sa33eed
-  //7okaa
-  //SA33EDD
+import 'package:up_dev_chef_app/features/auth/presentation/cubits/cubit/signup_cubit.dart';
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   initServiceLocator();
   await sl<CacheHelper>().init();
-  runApp(MultiBlocProvider(
-    providers: [
-      BlocProvider(
-         create: (context) => sl<LoginCubit>(),
-      ),
-      
-    ],
-    child: const ChefApp(),
-  ));
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => sl<LoginCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<SignupCubit>(),
+        ),
+      ],
+      child: const ChefApp(),
+    ),
+  );
 }
