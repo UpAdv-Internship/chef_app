@@ -7,6 +7,7 @@ import 'package:up_dev_chef_app/core/utils/commons.dart';
 import 'package:up_dev_chef_app/features/auth/presentation/cubits/cubit/login_cubit.dart';
 import 'package:up_dev_chef_app/features/auth/presentation/cubits/cubit/login_state.dart';
 
+import '../../../../core/common/commons.dart';
 import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_strings.dart';
 
@@ -26,6 +27,10 @@ class _LoginScreenState extends State<LoginScreen> {
           child: BlocConsumer<LoginCubit, LoginState>(
             listener: (context, state) {
               if (state is LoginSuccessState) {
+                showTwist(
+                  state: ToastStates.success,
+                  messege: AppStrings.loginSuccessful
+                );
                 navigateReplacment(context: context, route: Routes.home);
                 BlocProvider.of<LoginCubit>(context).emailController.clear();
                 BlocProvider.of<LoginCubit>(context).passwordController.clear();
@@ -165,12 +170,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
                           //elevated button
 
+                          state is LoginLoadingState?CircularProgressIndicator():
                           SizedBox(
                             height: 50,
                             width: 190,
                             child: ElevatedButton(
                               onPressed: () {
-                                BlocProvider.of<LoginCubit>(context).login();
+                                if(BlocProvider.of<LoginCubit>(context).loginKey.currentState!.validate()){
+                                  BlocProvider.of<LoginCubit>(context).login();
+                                }
                               },
                               style: getAppTheme().elevatedButtonTheme.style,
                               child: const Text(AppStrings.login),
