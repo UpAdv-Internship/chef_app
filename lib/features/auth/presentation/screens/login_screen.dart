@@ -6,6 +6,7 @@ import 'package:up_dev_chef_app/core/utils/app_router.dart';
 import 'package:up_dev_chef_app/core/utils/commons.dart';
 import 'package:up_dev_chef_app/features/auth/presentation/cubits/cubit/login_cubit.dart';
 import 'package:up_dev_chef_app/features/auth/presentation/cubits/cubit/login_state.dart';
+import 'package:up_dev_chef_app/features/profile/presentation/cubits/profile_cubit/profile_cubit.dart';
 
 import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_strings.dart';
@@ -171,6 +172,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: ElevatedButton(
                               onPressed: () {
                                 BlocProvider.of<LoginCubit>(context).login();
+                                BlocProvider.of<ProfileCubit>(context).getChefData();
+                                
                               },
                               style: getAppTheme().elevatedButtonTheme.style,
                               child: const Text(AppStrings.login),

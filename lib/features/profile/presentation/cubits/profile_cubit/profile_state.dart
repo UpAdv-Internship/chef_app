@@ -28,5 +28,9 @@ final class LogoutLoadingState extends ProfileState {}
 
 final class TakePhotoSuccessState extends ProfileState {}
 
+final class GetChefDataLoadingState extends ProfileState {}
+final class GetChefDataSuccessState extends ProfileState {}
+final class GetChefDataErrorState extends ProfileState {}
+
 
 

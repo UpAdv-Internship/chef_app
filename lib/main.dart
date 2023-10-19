@@ -16,7 +16,7 @@ void main() async {
       providers: [
         BlocProvider(create: (context) => sl<LoginCubit>()),
         BlocProvider(create: (context) => sl<SignupCubit>()),
-        BlocProvider(create: (context) => sl<ProfileCubit>()),
+        BlocProvider(create: (context) => sl<ProfileCubit>()..getChefData()),
       ],
       child: const ChefApp(),
     ),

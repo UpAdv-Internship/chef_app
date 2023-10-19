@@ -41,19 +41,18 @@ class HomeScreen extends StatelessWidget {
                           //   radius: 75,
                           //   backgroundImage: AssetImage(AppAssets.profile),
                           // ),
-                          profileCubit.image != null
-                              ? CircleAvatar(
+                          
+                              CircleAvatar(
                                   radius: 80,
-                                  backgroundImage: FileImage(
-                                    File(profileCubit.image!.path),
-                                  ),
-                                )
-                              : Image.asset(AppAssets.imagePicker),
+                                  backgroundImage: NetworkImage(profileCubit.getChefModel!.profilePic),
+                                ),
+            
                           SizedBox(
                             height: 5.h,
                           ),
-                          Text(
-                            'Mahmoud',
+                          state is GetChefDataLoadingState ?const CircleAvatar(): Text(
+                            profileCubit.getChefModel!.name,
+                        // context.read<ProfileCubit>().getChefModel!.email,
                             style: Theme.of(context)
                                 .textTheme
                                 .displayLarge!
@@ -62,8 +61,8 @@ class HomeScreen extends StatelessWidget {
                           SizedBox(
                             height: 5.h,
                           ),
-                          Text(
-                            'mahmoudmagdy@gmail.com',
+                         state is GetChefDataLoadingState ?const CircleAvatar(): Text(
+                            profileCubit.getChefModel!.email,
                             style: Theme.of(context)
                                 .textTheme
                                 .displayMedium!

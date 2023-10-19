@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:up_dev_chef_app/core/Widgets/custom_text_field.dart';
 import 'package:up_dev_chef_app/core/common/commons.dart';
-import 'package:up_dev_chef_app/core/utils/app_assets.dart';
 import 'package:up_dev_chef_app/core/utils/app_colors.dart';
 import 'package:up_dev_chef_app/core/utils/app_router.dart';
 import 'package:up_dev_chef_app/core/utils/app_strings.dart';
@@ -48,16 +47,23 @@ class UpdateProfileScreen extends StatelessWidget {
                         child: Stack(
                           children: [
                             Align(
-                              alignment: Alignment.center,
-                              child: profileCubit.image != null
-                                  ? CircleAvatar(
+                                alignment: Alignment.center,
+                                child: profileCubit.image != null
+                                    ? CircleAvatar(
                                       radius: 75,
-                                      backgroundImage: FileImage(
-                                        File(profileCubit.image!.path),
-                                      ),
-                                    )
-                                  : Image.asset(AppAssets.imagePicker),
-                            ),
+                                        backgroundImage: FileImage(
+                                          File(profileCubit.image!.path),
+                                        ),
+                                      )
+                                    : CircleAvatar(
+                                        radius: 75,
+                                        backgroundImage: NetworkImage(
+                                            profileCubit
+                                                .getChefModel!.profilePic)
+                                        // backgroundImage: FileImage(
+                                        //   File(profileCubit.image!.path),
+                                        // ),
+                                        )),
                             Positioned.directional(
                               textDirection: Directionality.of(context),
                               bottom: 0,
@@ -142,8 +148,18 @@ class UpdateProfileScreen extends StatelessWidget {
                         onPressed: () {
                           if (profileCubit.updateProfileKey.currentState!
                               .validate()) {
+                                    print(profileCubit.image!.name);
+
                             profileCubit.updateProfile();
+                            // state is UpdateProfileLoadingState
+                            //     ? const CircularProgressIndicator()
+                            //     : profileCubit.getChefData();
+                                
                           }
+                          // profileCubit.updateProfile();
+                          // state is UpdateProfileLoadingState
+                          //       ? const Center(child: CircularProgressIndicator())
+                          //       : profileCubit.getChefData();
                         },
                         style: ElevatedButton.styleFrom(
                           fixedSize: Size(double.maxFinite, 50.h),

@@ -49,7 +49,7 @@ class _SignUpStep3State extends State<SignUpStep3> {
       Placemark place = placemark[0];
 
       setState(() {
-        _currentAddress = '${place.country},${place.locality},${place.street},';
+        _currentAddress = '${place.country},${place.locality},${place.street}';
       });
     } catch (e) {
       if (kDebugMode) {

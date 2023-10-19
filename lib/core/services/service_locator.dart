@@ -6,8 +6,10 @@ import 'package:up_dev_chef_app/core/databases/cache/cache_helper.dart';
 import 'package:up_dev_chef_app/features/auth/data/repository/auth_repo.dart';
 import 'package:up_dev_chef_app/features/auth/presentation/cubits/cubit/login_cubit.dart';
 import 'package:up_dev_chef_app/features/profile/data/repository/profile_repository.dart';
+import 'package:up_dev_chef_app/features/profile/data/repository/update_repo.dart';
 import 'package:up_dev_chef_app/features/profile/presentation/cubits/profile_cubit/profile_cubit.dart';
 import 'package:up_dev_chef_app/features/auth/presentation/cubits/cubit/signup_cubit.dart';
+import 'package:up_dev_chef_app/features/profile/presentation/cubits/update_prof_cubit/update_profile_cubit.dart';
 
 final sl = GetIt.instance;
 void initServiceLocator() {
@@ -15,8 +17,11 @@ void initServiceLocator() {
   sl.registerLazySingleton<ApiConsumer>(() => DioConsumer(sl()));
   sl.registerLazySingleton(() => Dio());
   sl.registerLazySingleton(() => AuthRepository());
+  sl.registerLazySingleton(() => UpdateProfileCubit(sl()));
+  sl.registerLazySingleton(() => UpdateProfileRepository());
+
   sl.registerLazySingleton(() => ProfileRepo());
   sl.registerLazySingleton(() => LoginCubit(sl()));
-  sl.registerLazySingleton(() => ProfileCubit(sl()));
+  sl.registerLazySingleton(() => ProfileCubit(sl(),sl()));
   sl.registerLazySingleton(() => SignupCubit(sl()));
 }
