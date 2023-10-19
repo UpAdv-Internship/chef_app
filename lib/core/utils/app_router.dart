@@ -38,7 +38,7 @@ class AppRoutes {
       case Routes.home:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
       case Routes.updateProfileScreen:
-        return MaterialPageRoute(builder: (_) =>  UpdateProfileScreen());
+        return MaterialPageRoute(builder: (_) => const UpdateProfileScreen());
 
       // case Routes.signUpProfile:
       //     return MaterialPageRoute(builder: (_) => const signUpProfileScreen());

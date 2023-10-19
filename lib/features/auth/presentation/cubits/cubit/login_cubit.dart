@@ -14,9 +14,9 @@ class LoginCubit extends Cubit<LoginState> {
   TextEditingController emailController = TextEditingController();
   bool isVis = true;
   TextEditingController passwordController = TextEditingController();
-GlobalKey<FormState> loginKey = GlobalKey<FormState>();
+  GlobalKey<FormState> loginKey = GlobalKey<FormState>();
 
-bool isLoginPasswordsShowing = true;
+  bool isLoginPasswordsShowing = true;
   IconData suffixIcon = Icons.visibility;
   void changeLoginPasswordSuffixIcon() {
     isLoginPasswordsShowing = !isLoginPasswordsShowing;
@@ -24,7 +24,7 @@ bool isLoginPasswordsShowing = true;
         isLoginPasswordsShowing ? Icons.visibility : Icons.visibility_off;
     emit(ChangeLoginPasswordSuffixIcon());
   }
-  
+
   LoginModel? loginModel;
   void login() async {
     emit(LoginLoadingState());
