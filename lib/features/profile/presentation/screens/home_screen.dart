@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:up_dev_chef_app/core/utils/app_assets.dart';
 import 'package:up_dev_chef_app/core/utils/app_colors.dart';
 import 'package:up_dev_chef_app/core/utils/app_router.dart';
