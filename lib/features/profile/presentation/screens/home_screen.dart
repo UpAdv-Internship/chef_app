@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,62 +11,70 @@ import 'package:up_dev_chef_app/core/widgets/custom_text_icon_button.dart';
 import 'package:up_dev_chef_app/features/profile/presentation/cubits/profile_cubit/profile_cubit.dart';
 import 'package:up_dev_chef_app/features/profile/presentation/cubits/profile_cubit/profile_state.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Column(
           children: [
-            Stack(
-              // fit: StackFit.loose,
-              clipBehavior: Clip.none,
-              children: [
-                Image.asset(
-                  AppAssets.backgroundTwo,
-                  fit: BoxFit.fill,
-                  width: double.infinity,
-                ),
-                Positioned(
-                  top: 110,
-                  right: 120,
-                  child: Column(
-                    children: [
-                      const CircleAvatar(
-                        radius: 75,
-                        backgroundImage: AssetImage(AppAssets.profile),
+            BlocBuilder<ProfileCubit, ProfileState>(
+              builder: (context, state) {
+                final profileCubit = BlocProvider.of<ProfileCubit>(context);
+                return Stack(
+                  // fit: StackFit.loose,
+                  clipBehavior: Clip.none,
+                  alignment: Alignment.center,
+                  children: [
+                    Image.asset(
+                      AppAssets.backgroundTwo,
+                      fit: BoxFit.fill,
+                      width: double.infinity,
+                    ),
+                    Positioned(
+                      top: 60.h,                      
+                      child: Column(
+                        children: [
+                          // const CircleAvatar(
+                          //   radius: 75,
+                          //   backgroundImage: AssetImage(AppAssets.profile),
+                          // ),
+                          profileCubit.image != null
+                              ? CircleAvatar(
+                                  radius: 80,
+                                  backgroundImage: FileImage(
+                                    File(profileCubit.image!.path),
+                                  ),
+                                )
+                              : Image.asset(AppAssets.imagePicker),
+                          SizedBox(
+                            height: 5.h,
+                          ),
+                          Text(
+                            'Mahmoud',
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayLarge!
+                                .copyWith(color: AppColors.black),
+                          ),
+                          SizedBox(
+                            height: 5.h,
+                          ),
+                          Text(
+                            'mahmoudmagdy@gmail.com',
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayMedium!
+                                .copyWith(color: AppColors.grey, fontSize: 14),
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        height: 5.h,
-                      ),
-                      Text(
-                        'Mahmoud',
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayLarge!
-                            .copyWith(color: AppColors.black),
-                      ),
-                      SizedBox(
-                        height: 5.h,
-                      ),
-                      Text(
-                        'mahmoudmagdy@gmail.com',
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayMedium!
-                            .copyWith(color: AppColors.grey, fontSize: 14),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                    ),
+                  ],
+                );
+              },
             ),
             SizedBox(
               height: 100.h,
@@ -93,9 +103,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             CustomTextButtonIcon(
                               onPressed: () {
-                                navigate(
-                                    context: context,
-                                    route: Routes.updateProfileScreen);
+                                // navigate(
+                                //     context: context,
+                                //     route: Routes.updateProfileScreen);
                               },
                               icon: const Text(
                                 'تعديل الملف الشخصي',
@@ -142,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                         builder: (context, state) {
                           return InkWell(
-                            onTap: (){
+                            onTap: () {
                               BlocProvider.of<ProfileCubit>(context).logout();
                             },
                             child: Row(

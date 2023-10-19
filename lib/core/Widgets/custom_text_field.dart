@@ -25,7 +25,7 @@ class CustomTextFormField extends StatelessWidget {
         } else {
           return null;
         }
-      },
+      },      
       controller: controller,
       onChanged: onChanged,
       cursorColor: AppColors.orange,

@@ -22,6 +22,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   TextEditingController brandNameController = TextEditingController();
   TextEditingController minChargeController = TextEditingController();
   TextEditingController discController = TextEditingController();
+  GlobalKey<FormState> updateProfileKey = GlobalKey();
   XFile? image;
   void updateProfile() async {
     emit(UpdateProfileLoadingState());

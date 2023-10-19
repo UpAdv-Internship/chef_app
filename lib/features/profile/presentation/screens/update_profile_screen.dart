@@ -5,8 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:up_dev_chef_app/core/Widgets/custom_text_field.dart';
+import 'package:up_dev_chef_app/core/common/commons.dart';
 import 'package:up_dev_chef_app/core/utils/app_assets.dart';
 import 'package:up_dev_chef_app/core/utils/app_colors.dart';
+import 'package:up_dev_chef_app/core/utils/app_router.dart';
 import 'package:up_dev_chef_app/core/utils/app_strings.dart';
 import 'package:up_dev_chef_app/core/utils/commons.dart';
 import 'package:up_dev_chef_app/features/profile/components/image_picker_dialog.dart';
@@ -19,7 +21,7 @@ class UpdateProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    // return SafeArea(
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -28,10 +30,16 @@ class UpdateProfileScreen extends StatelessWidget {
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(24),
-            child: BlocBuilder<ProfileCubit, ProfileState>(
+            child: BlocConsumer<ProfileCubit, ProfileState>(
+              listener: (context, state) {
+                if (state is UpdateProfileSuccessState) {
+                  navigateReplacment(context: context, route: Routes.home);
+                }
+              },
               builder: (context, state) {
                 final profileCubit = BlocProvider.of<ProfileCubit>(context);
                 return Form(
+                  key: profileCubit.updateProfileKey,
                   child: Column(
                     children: [
                       //! Image
@@ -131,7 +139,12 @@ class UpdateProfileScreen extends StatelessWidget {
                       const SizedBox(height: 15),
                       //! Update Button
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          if (profileCubit.updateProfileKey.currentState!
+                              .validate()) {
+                            profileCubit.updateProfile();
+                          }
+                        },
                         style: ElevatedButton.styleFrom(
                           fixedSize: Size(double.maxFinite, 50.h),
                         ),
@@ -148,4 +161,3 @@ class UpdateProfileScreen extends StatelessWidget {
     );
   }
 }
-
