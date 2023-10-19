@@ -81,7 +81,9 @@ class HomeScreen extends StatelessWidget {
                             ),
                             CustomTextButtonIcon(
                               onPressed: () {
-                                navigate(context: context, route: Routes.updateProfileScreen);
+                                navigate(
+                                    context: context,
+                                    route: Routes.updateProfileScreen);
                               },
                               icon: const Text(
                                 'تعديل الملف الشخصي',
@@ -117,7 +119,7 @@ class HomeScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      
+
                       //تسجيل الخروج
                       InkWell(
                         onTap: () {},
