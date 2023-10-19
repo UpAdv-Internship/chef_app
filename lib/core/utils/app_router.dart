@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:up_dev_chef_app/core/error/no_internet_connection.dart';
 import 'package:up_dev_chef_app/features/auth/presentation/screens/signup_screen.dart';
 import 'package:up_dev_chef_app/features/profile/presentation/screens/home_screen.dart';
 import 'package:up_dev_chef_app/features/profile/presentation/screens/update_profile_screen.dart';
@@ -22,6 +23,7 @@ class Routes {
   static const String signUpLocation = '/signUpLocation';
 
   static const String signUpMoreInfo = '/signUpMoreInfo';
+  static const String noInternetConnection = '/noInternetConnection';
 }
 
 class AppRoutes {
@@ -40,8 +42,9 @@ class AppRoutes {
       case Routes.updateProfileScreen:
         return MaterialPageRoute(builder: (_) => const UpdateProfileScreen());
 
-      // case Routes.signUpProfile:
-      //     return MaterialPageRoute(builder: (_) => const signUpProfileScreen());
+      case Routes.noInternetConnection:
+        return MaterialPageRoute(
+            builder: (_) => const NoInternetConnectionScreen());
 
       // case Routes.signUpPersonalImage:
       //     return MaterialPageRoute(builder: (_) => const signUpPersonalImageScreen());
