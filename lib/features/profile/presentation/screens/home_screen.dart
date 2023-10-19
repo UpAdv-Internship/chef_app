@@ -1,13 +1,22 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:up_dev_chef_app/core/utils/app_assets.dart';
 import 'package:up_dev_chef_app/core/utils/app_colors.dart';
 import 'package:up_dev_chef_app/core/utils/app_router.dart';
 import 'package:up_dev_chef_app/core/utils/commons.dart';
 import 'package:up_dev_chef_app/core/widgets/custom_text_icon_button.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +80,10 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       //تعديل الملف
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          navigate(
+                              context: context, route: Routes.updateProfileScreen);
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -153,4 +165,5 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
 }
