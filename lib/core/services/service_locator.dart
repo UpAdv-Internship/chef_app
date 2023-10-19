@@ -7,6 +7,7 @@ import 'package:up_dev_chef_app/features/auth/data/repository/auth_repo.dart';
 import 'package:up_dev_chef_app/features/auth/presentation/cubits/cubit/login_cubit.dart';
 import 'package:up_dev_chef_app/features/profile/data/repository/profile_repository.dart';
 import 'package:up_dev_chef_app/features/profile/presentation/cubits/profile_cubit/profile_cubit.dart';
+import 'package:up_dev_chef_app/features/auth/presentation/cubits/cubit/signup_cubit.dart';
 
 final sl = GetIt.instance;
 void initServiceLocator() {
@@ -17,5 +18,5 @@ void initServiceLocator() {
   sl.registerLazySingleton(() => ProfileRepo());
   sl.registerLazySingleton(() => LoginCubit(sl()));
   sl.registerLazySingleton(() => ProfileCubit(sl()));
-
+  sl.registerLazySingleton(() => SignupCubit(sl()));
 }

@@ -26,15 +26,10 @@ class _LoginScreenState extends State<LoginScreen> {
           child: BlocConsumer<LoginCubit, LoginState>(
             listener: (context, state) {
               if (state is LoginSuccessState) {
-    
-                      navigateReplacment(context: context, route: Routes.home);
-                      BlocProvider.of<LoginCubit>(context)
-                          .emailController
-                          .clear();
-                      BlocProvider.of<LoginCubit>(context)
-                          .passwordController
-                          .clear();
-                    }
+                navigateReplacment(context: context, route: Routes.home);
+                BlocProvider.of<LoginCubit>(context).emailController.clear();
+                BlocProvider.of<LoginCubit>(context).passwordController.clear();
+              }
             },
             builder: (context, state) {
               return Form(
@@ -46,7 +41,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     Stack(
                       alignment: AlignmentDirectional.center,
                       children: [
-                        Image.asset(AppAssets.backgroundTwo),
+                        Container(
+                          height: 200,
+                          width: double.infinity,
+                          decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  fit: BoxFit.fill,
+                                  image: AssetImage(AppAssets.backgroundTwo))),
+                        ),
                         const Center(
                             child: Text(
                           AppStrings.welcome,
@@ -120,16 +122,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                     BlocProvider.of<LoginCubit>(context)
                                         .changeLoginPasswordSuffixIcon();
                                   },
-                                  icon:
-                                      BlocProvider.of<LoginCubit>(context).isLoginPasswordsShowing
-                                          ? const Icon(
-                                              Icons.visibility_off,
-                                              color: AppColors.primary,
-                                            )
-                                          : const Icon(
-                                              Icons.visibility,
-                                              color: AppColors.primary,
-                                            ),
+                                  icon: BlocProvider.of<LoginCubit>(context)
+                                          .isLoginPasswordsShowing
+                                      ? const Icon(
+                                          Icons.visibility_off,
+                                          color: AppColors.primary,
+                                        )
+                                      : const Icon(
+                                          Icons.visibility,
+                                          color: AppColors.primary,
+                                        ),
                                 )),
                             validator: (data) {
                               if (data!.length < 6 || data.isEmpty) {

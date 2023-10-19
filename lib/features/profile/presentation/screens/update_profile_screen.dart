@@ -20,6 +20,7 @@ class UpdateProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+    return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: const Text(AppStrings.updateProfile),
@@ -147,3 +148,4 @@ class UpdateProfileScreen extends StatelessWidget {
     );
   }
 }
+

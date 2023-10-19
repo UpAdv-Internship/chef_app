@@ -1,6 +1,7 @@
 class EndPoint {
   static const String baseUrl = 'https://food-api-omega.vercel.app/api/v1/';
   static const String chefSignIn = 'chef/signin';
+  static const String chefSignUp = 'chef/signup';
   static const String chefChangePassword = 'chef/change-password';
   static const String chefDelete = 'chef/delete';
   static const String chefGet = 'chef/get-chef/';
@@ -24,6 +25,7 @@ class EndPoint {
   static String getDeleteMealEndPoints(id) {
     return '$deleteMeal$id';
   }
+
   static String getAllChefMeals(id) {
     return 'chef/get-chef/$id/meals';
   }
@@ -39,6 +41,9 @@ class Apikeys {
   static const String code = 'code';
   static const String name = 'name';
   static const String description = 'description';
+  static const String healthCertificate = 'healthCertificate';
+  static const String frontId = 'frontId';
+  static const String backId = 'backId';
   static const String price = 'price';
   static const String category = 'category';
   static const String mealImages = 'mealImages';
@@ -51,6 +56,5 @@ class Apikeys {
   static const String profilePic = 'profilePic';
   static const String oldPass = 'oldPass';
   static const String newPass = 'newPass';
-  static const String chef = 'chef'; 
-
+  static const String chef = 'chef';
 }

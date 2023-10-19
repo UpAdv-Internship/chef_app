@@ -37,6 +37,7 @@ dependencies:
   flutter_screenutil: ^5.9.0
   get_it: ^7.6.4
   google_fonts: ^6.1.0
+  fluttertoast: ^8.2.2
   im_stepper: ^1.0.1+1
   image_picker: ^1.0.4
   jwt_decoder: ^2.0.1
