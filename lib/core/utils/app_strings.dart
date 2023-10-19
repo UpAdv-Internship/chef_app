@@ -13,6 +13,7 @@ class AppStrings {
   static const String login = 'تسجيل الدخول';
   static const String dontHaveEmail = 'ليس لديك حساب؟';
   static const String createEmail = 'انشاء حساب';
+  static const String loginSuccessful = 'تم الدخول بنجاح';
   static const String pleaseEnterValidEmail = 'من فضلك ادخل بريد الكتروني صحيح';
   static const String pleaseEnterValidPassword = 'من فضلك ادخل كلمة السر صحيح';
   //! Signup Screen
