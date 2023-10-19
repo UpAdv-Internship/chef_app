@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:im_stepper/stepper.dart';
 import 'package:up_dev_chef_app/core/utils/app_colors.dart';
 import 'package:up_dev_chef_app/core/utils/app_router.dart';
@@ -77,35 +76,6 @@ class SignUpScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-
-                //! Buttons
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Next Button
-                    ElevatedButton(
-                      onPressed: () {
-                        signUpCubit.currentStep == 3
-                            ? null //! Add Navigator to home page
-                            : signUpCubit.increaseStepperIndex();
-                      },
-                      child: Text(signUpCubit.currentStep == 3
-                          ? AppStrings.save
-                          : AppStrings.next),
-                    ),
-                    const SizedBox(width: 20),
-                    // Previous Button
-                    signUpCubit.currentStep == 0
-                        ? Container()
-                        : ElevatedButton(
-                            onPressed: () {
-                              signUpCubit.decreaseStepperIndex();
-                            },
-                            child: const Text(AppStrings.previous),
-                          ),
-                  ],
-                ),
-                SizedBox(height: 20.h),
               ],
             ),
           ),

@@ -1,6 +1,6 @@
 import 'package:up_dev_chef_app/core/databases/api/end_points.dart';
 
-class SignUpModel {
+class UserModel {
   final String name;
   final String phone;
   final String email;
@@ -14,7 +14,7 @@ class SignUpModel {
   final String frontId;
   final String backId;
   final String profilePic;
-  SignUpModel({
+  UserModel({
     required this.name,
     required this.phone,
     required this.email,
@@ -29,8 +29,8 @@ class SignUpModel {
     required this.backId,
     required this.profilePic,
   });
-  factory SignUpModel.fromJson(Map<String, dynamic> jsonData) {
-    return SignUpModel(
+  factory UserModel.fromJson(Map<String, dynamic> jsonData) {
+    return UserModel(
       name: jsonData[Apikeys.name],
       phone: jsonData[Apikeys.phone],
       email: jsonData[Apikeys.email],

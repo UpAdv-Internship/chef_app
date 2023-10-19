@@ -14,5 +14,5 @@ void initServiceLocator() {
   sl.registerLazySingleton(() => Dio());
   sl.registerLazySingleton(() => AuthRepository());
   sl.registerLazySingleton(() => LoginCubit(sl()));
-  sl.registerLazySingleton(() => SignupCubit());
+  sl.registerLazySingleton(() => SignupCubit(sl()));
 }

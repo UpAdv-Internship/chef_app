@@ -7,21 +7,20 @@ import 'package:up_dev_chef_app/features/auth/presentation/cubits/cubit/login_cu
 import 'package:up_dev_chef_app/features/auth/presentation/cubits/cubit/signup_cubit.dart';
 
 void main() async {
-  //Sa33eed
-  //7okaa
-  //SA33EDD
   WidgetsFlutterBinding.ensureInitialized();
   initServiceLocator();
   await sl<CacheHelper>().init();
-  runApp(MultiBlocProvider(
-    providers: [
-      BlocProvider(
-        create: (context) => sl<LoginCubit>(),
-      ),
-      BlocProvider(
-        create: (context) => sl<SignupCubit>(),
-      ),
-    ],
-    child: const ChefApp(),
-  ));
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => sl<LoginCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<SignupCubit>(),
+        ),
+      ],
+      child: const ChefApp(),
+    ),
+  );
 }
