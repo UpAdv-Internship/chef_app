@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:up_dev_chef_app/core/common/commons.dart';
 import 'package:up_dev_chef_app/core/databases/api/api_consumer.dart';
 import 'package:up_dev_chef_app/core/databases/api/end_points.dart';
@@ -13,15 +14,21 @@ class AuthRepository {
     required String email,
     required String password,
   }) async {
-    try {
-      final response = await sl<ApiConsumer>().post(EndPoint.chefSignIn, data: {
-        Apikeys.email: email,
-        Apikeys.password: password,
-      });
-      return Right(LoginModel.fromJson(response));
-    } on ServerException catch (error) {
-      return Left(error.errorModel.errorMessage);
+    bool internetCheacker = await sl<InternetConnectionChecker>().hasConnection;
+
+    if (internetCheacker == true) {
+      try {
+        final response =
+            await sl<ApiConsumer>().post(EndPoint.chefSignIn, data: {
+          Apikeys.email: email,
+          Apikeys.password: password,
+        });
+        return Right(LoginModel.fromJson(response));
+      } on ServerException catch (error) {
+        return Left(error.errorModel.errorMessage);
+      }
     }
+    return const Left("NO Internet Connection");
   }
 
   Future<Either<String, SignUpModel>> signUp({
