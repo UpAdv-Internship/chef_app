@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:up_dev_chef_app/core/databases/cache/cache_helper.dart';
+import 'package:up_dev_chef_app/core/services/service_locator.dart';
 import 'package:up_dev_chef_app/core/utils/app_assets.dart';
 import 'package:up_dev_chef_app/core/utils/app_colors.dart';
 import 'package:up_dev_chef_app/core/utils/app_router.dart';
@@ -34,7 +36,7 @@ class HomeScreen extends StatelessWidget {
                       width: double.infinity,
                     ),
                     Positioned(
-                      top: 60.h,                      
+                      top: 60.h,
                       child: Column(
                         children: [
                           // const CircleAvatar(
@@ -148,9 +150,10 @@ class HomeScreen extends StatelessWidget {
                           if (state is LogoutSuccessState) {
                             navigateReplacment(
                                 context: context, route: Routes.login);
+                            // sl<CacheHelper>().clearData(key: 'token');
                           }
                         },
-                        builder: (context, state) {
+                        builder: (context, pstate) {
                           return InkWell(
                             onTap: () {
                               BlocProvider.of<ProfileCubit>(context).logout();

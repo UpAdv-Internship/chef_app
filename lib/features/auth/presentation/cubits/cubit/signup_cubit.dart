@@ -36,7 +36,7 @@ class SignupCubit extends Cubit<SignupState> {
   XFile? frontId;
   XFile? backId;
   XFile? profilePic;
-  
+
   int currentStep = 0;
   increaseStepperIndex() {
     currentStep++;
@@ -74,5 +74,33 @@ class SignupCubit extends Cubit<SignupState> {
   void changeImage(value) {
     profilePic = value;
     emit(ChangeImageState());
+  }
+
+  bool obscure = true;
+  bool isVisible = false;
+  IconButton suffixIcon() {
+    return IconButton(
+        onPressed: () {
+          obscure = !obscure;
+          isVisible = !isVisible;
+          emit(ChangeIconButton());
+        },
+        icon: isVisible
+            ? const Icon(Icons.visibility)
+            : const Icon(Icons.visibility_off));
+  }
+
+  bool confirmObscure = true;
+  bool confirmIsVisible = false;
+  IconButton confirmSuffixIcon() {
+    return IconButton(
+        onPressed: () {
+          confirmObscure = !confirmObscure;
+          confirmIsVisible = !confirmIsVisible;
+          emit(ChangeIconButton());
+        },
+        icon: confirmIsVisible
+            ? const Icon(Icons.visibility)
+            : const Icon(Icons.visibility_off));
   }
 }

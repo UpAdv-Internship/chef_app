@@ -69,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 100,
                     ),
-                    
+
                     //two texts Email and password
                     Padding(
                       padding: const EdgeInsets.all(24),
@@ -89,10 +89,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               if (value.isEmpty) {
                                 return AppStrings.pleaseEnterValidEmail;
                               }
+                              if (value.contains(' ')) {
+                                return AppStrings.pleaseEnterValidEmail;
+                              }
                               return null;
                             },
                           ),
-
 
                           const SizedBox(
                             height: 32,
