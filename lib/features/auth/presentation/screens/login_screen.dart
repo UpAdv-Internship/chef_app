@@ -44,8 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 key: BlocProvider.of<LoginCubit>(context).loginKey,
                 child: Column(
                   children: [
-                    //image and welcome text
-
+                    //! Image and welcome text
                     Stack(
                       alignment: AlignmentDirectional.center,
                       children: [
@@ -67,10 +66,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         ))
                       ],
                     ),
-
                     const SizedBox(
                       height: 100,
                     ),
+                    
                     //two texts Email and password
                     Padding(
                       padding: const EdgeInsets.all(24),
@@ -94,29 +93,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                           ),
 
-                          // TextFormField(
-                          //   controller: BlocProvider.of<LoginCubit>(context)
-                          //       .emailController,
-                          //   keyboardType: TextInputType.emailAddress,
-                          //   cursorColor: AppColors.primary,
-                          //   decoration: InputDecoration(
-                          //       hintText: AppStrings.email,
-                          //       contentPadding:
-                          //           const EdgeInsets.symmetric(horizontal: 16),
-                          //       border: OutlineInputBorder(
-                          //           borderRadius: BorderRadius.circular(10)),
-                          //       focusedBorder: OutlineInputBorder(
-                          //           borderSide:
-                          //               const BorderSide(color: AppColors.grey),
-                          //           borderRadius: BorderRadius.circular(10))),
-                          //   validator: (data) {
-                          //     if (data!.isEmpty ||
-                          //         !data.contains('@gmail.com')) {
-                          //       return AppStrings.pleaseEnterValidEmail;
-                          //     }
-                          //     return null;
-                          //   },
-                          // ),
 
                           const SizedBox(
                             height: 32,
