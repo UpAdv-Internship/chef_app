@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
       //         null
       //     ? navigate(context: context, route: Routes.login)
       //     : navigate(context: context, route: Routes.home);
-      navigate(context: context, route: Routes.login);
+      navigateReplacment(context: context, route: Routes.login);
     });
   }
 

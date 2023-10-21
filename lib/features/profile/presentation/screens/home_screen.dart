@@ -104,7 +104,7 @@ class HomeScreen extends StatelessWidget {
                       //تعديل الملف
                       InkWell(
                         onTap: () {
-                          navigate(
+                          navigateReplacment(
                               context: context,
                               route: Routes.updateProfileScreen);
                         },
@@ -169,6 +169,7 @@ class HomeScreen extends StatelessWidget {
                           return InkWell(
                             onTap: () {
                               BlocProvider.of<ProfileCubit>(context).logout();
+                              
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -178,7 +179,9 @@ class HomeScreen extends StatelessWidget {
                                   color: AppColors.grey,
                                 ),
                                 CustomTextButtonIcon(
-                                  onPressed: () {},
+                                  onPressed: () {
+
+                                  },
                                   icon: const Text(
                                     'تسجيل الخروج',
                                     style: TextStyle(color: AppColors.grey),
