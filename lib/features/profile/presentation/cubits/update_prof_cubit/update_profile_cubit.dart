@@ -36,9 +36,9 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
       emit(UpdateChefSuccessState());
     });
   }
-  void changeImageUpdateProfile(value) {
-    image = value;
-    emit(ChangeImageUpdateProfile());
-  }
+  // void changeImageUpdateProfile(value) {
+  //   image = value;
+  //   emit(ChangeImageUpdateProfile());
+  // }
 
 }
