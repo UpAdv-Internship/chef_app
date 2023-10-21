@@ -8,24 +8,32 @@ class CustomTextFormField extends StatelessWidget {
     required this.controller,
     this.isObscure = false,
     this.showSuffix = false,
-    this.onChanged, this.keyboardType,
+    this.keyboardType,
+    this.validator,
+    this.suffixIcon,
+    this.changeSuffix, 
+    this.onChanged,
   });
   final String hint;
   final TextEditingController controller;
   final bool isObscure;
   final bool showSuffix;
+  final Widget? suffixIcon;
   final TextInputType? keyboardType;
+  final String? Function(String?)? validator;
+  final void Function()? changeSuffix;
   final void Function(String)? onChanged;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      validator: (value) {
-        if (value!.isEmpty) {
-          return "هذا الحقل مطلوب";
-        } else {
-          return null;
-        }
-      },      
+      validator: validator ??
+          (value) {
+            if (value!.isEmpty) {
+              return "هذا الحقل مطلوب";
+            } else {
+              return null;
+            }
+          },
       controller: controller,
       onChanged: onChanged,
       cursorColor: AppColors.orange,
@@ -33,12 +41,7 @@ class CustomTextFormField extends StatelessWidget {
       keyboardType: keyboardType,
       decoration: InputDecoration(
         hintText: hint,
-        suffixIcon: showSuffix
-            ? IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.visibility_off),
-              )
-            : null,
+        suffixIcon: suffixIcon,
         suffixIconColor: AppColors.orange,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),

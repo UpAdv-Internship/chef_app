@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:up_dev_chef_app/core/Widgets/custom_text_field.dart';
 import 'package:up_dev_chef_app/core/services/service_locator.dart';
 import 'package:up_dev_chef_app/core/theme/app_theme.dart';
 import 'package:up_dev_chef_app/core/utils/app_colors.dart';
@@ -76,83 +77,65 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Column(
                         children: [
                           // Email
-
-                          TextFormField(
+                          CustomTextFormField(
+                            hint: AppStrings.email,
                             controller: BlocProvider.of<LoginCubit>(context)
                                 .emailController,
-                            keyboardType: TextInputType.emailAddress,
-                            cursorColor: AppColors.primary,
-                            decoration: InputDecoration(
-                                hintText: AppStrings.email,
-                                contentPadding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        const BorderSide(color: AppColors.grey),
-                                    borderRadius: BorderRadius.circular(10))),
-                            validator: (data) {
-                              if (data!.isEmpty ||
-                                  !data.contains('@gmail.com')) {
+                            validator: (value) {
+                              if (RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
+                                      .hasMatch(value!) !=
+                                  true) {
+                                return AppStrings.pleaseEnterValidEmail;
+                              }
+                              if (value.isEmpty) {
                                 return AppStrings.pleaseEnterValidEmail;
                               }
                               return null;
                             },
                           ),
 
+                          // TextFormField(
+                          //   controller: BlocProvider.of<LoginCubit>(context)
+                          //       .emailController,
+                          //   keyboardType: TextInputType.emailAddress,
+                          //   cursorColor: AppColors.primary,
+                          //   decoration: InputDecoration(
+                          //       hintText: AppStrings.email,
+                          //       contentPadding:
+                          //           const EdgeInsets.symmetric(horizontal: 16),
+                          //       border: OutlineInputBorder(
+                          //           borderRadius: BorderRadius.circular(10)),
+                          //       focusedBorder: OutlineInputBorder(
+                          //           borderSide:
+                          //               const BorderSide(color: AppColors.grey),
+                          //           borderRadius: BorderRadius.circular(10))),
+                          //   validator: (data) {
+                          //     if (data!.isEmpty ||
+                          //         !data.contains('@gmail.com')) {
+                          //       return AppStrings.pleaseEnterValidEmail;
+                          //     }
+                          //     return null;
+                          //   },
+                          // ),
+
                           const SizedBox(
                             height: 32,
                           ),
 
-                          // Passsword
-
-                          TextFormField(
-                            keyboardType: TextInputType.visiblePassword,
+                          // Passsword Text Field
+                          CustomTextFormField(
+                            hint: AppStrings.password,
                             controller: BlocProvider.of<LoginCubit>(context)
                                 .passwordController,
-                            obscureText: BlocProvider.of<LoginCubit>(context)
-                                .isLoginPasswordsShowing,
-                            cursorColor: AppColors.primary,
-                            decoration: InputDecoration(
-                                hintText: AppStrings.password,
-                                contentPadding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        const BorderSide(color: AppColors.grey),
-                                    borderRadius: BorderRadius.circular(10)),
-                                suffixIcon: IconButton(
-                                  onPressed: () {
-                                    BlocProvider.of<LoginCubit>(context)
-                                        .changeLoginPasswordSuffixIcon();
-                                  },
-                                  icon: BlocProvider.of<LoginCubit>(context)
-                                          .isLoginPasswordsShowing
-                                      ? const Icon(
-                                          Icons.visibility_off,
-                                          color: AppColors.primary,
-                                        )
-                                      : const Icon(
-                                          Icons.visibility,
-                                          color: AppColors.primary,
-                                        ),
-                                )),
-                            validator: (data) {
-                              if (data!.length < 6 || data.isEmpty) {
-                                return AppStrings.pleaseEnterValidPassword;
-                              }
-                              return null;
-                            },
-                          ),
-                          const SizedBox(
-                            height: 24,
-                          ),
+                            keyboardType: TextInputType.visiblePassword,
+                            showSuffix: true,
+                            suffixIcon: BlocProvider.of<LoginCubit>(context)
+                                .suffixIcon(),
+                            isObscure:
+                                BlocProvider.of<LoginCubit>(context).obscure,
 
-                          // ForgetPass
-
+                            // changeSuffix: BlocProvider.of<LoginCubit>(context).changeSuffixIcon(),
+                          ),
                           Row(
                             children: [
                               TextButton(

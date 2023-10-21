@@ -9,3 +9,4 @@ final class LoginErrorState extends LoginState {
 }
 final class LoginSuccessState extends LoginState {}
 final class ChangeLoginPasswordSuffixIcon extends LoginState {}
+final class ChangeIconButton extends LoginState {}
