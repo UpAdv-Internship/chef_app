@@ -56,7 +56,32 @@ class SignupCubit extends Cubit<SignupState> {
     currentStep--;
     emit(IncreaseStepperIndexState());
   }
-
+bool obscure = true;
+  bool isVisible = false;
+  IconButton suffixIcon() {
+    return IconButton(
+        onPressed: () {
+          obscure = !obscure;
+          isVisible = !isVisible;
+          emit(ChangeIconButton());
+        },
+        icon: isVisible
+            ? const Icon(Icons.visibility)
+            : const Icon(Icons.visibility_off));
+  }
+bool confirmObscure = true;
+  bool confirmIsVisible = false;
+  IconButton confirmSuffixIcon() {
+    return IconButton(
+        onPressed: () {
+          confirmObscure = !confirmObscure;
+          confirmIsVisible = !confirmIsVisible;
+          emit(ChangeIconButton());
+        },
+        icon: confirmIsVisible
+            ? const Icon(Icons.visibility)
+            : const Icon(Icons.visibility_off));
+  }
   signUp() async {
     emit(SignUpLoadinStateState());
     final result = await authRepository.signUp(

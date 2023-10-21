@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:up_dev_chef_app/core/databases/api/end_points.dart';
-import 'package:up_dev_chef_app/core/databases/cache/cache_helper.dart';
-import 'package:up_dev_chef_app/core/services/service_locator.dart';
 import 'package:up_dev_chef_app/core/utils/app_assets.dart';
 import 'package:up_dev_chef_app/core/utils/app_router.dart';
 import 'package:up_dev_chef_app/core/utils/app_strings.dart';
@@ -34,12 +30,13 @@ class _SplashScreenState extends State<SplashScreen> {
       navigate(context: context, route: Routes.login);
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
           body: Stack(
-            fit: StackFit.expand,
+        fit: StackFit.expand,
         children: [
           Image.asset(
             AppAssets.background,
@@ -54,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 const SizedBox(
                   height: 5,
                 ),
-                  Text(
+                Text(
                   AppStrings.chafApp,
                   style: Theme.of(context).textTheme.displayLarge,
                 ),
