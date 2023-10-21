@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:up_dev_chef_app/core/cubit/global_cubit.dart';
 import 'package:up_dev_chef_app/core/databases/api/end_points.dart';
 import 'package:up_dev_chef_app/core/databases/cache/cache_helper.dart';
 import 'package:up_dev_chef_app/core/services/service_locator.dart';
@@ -11,18 +12,24 @@ import 'package:up_dev_chef_app/features/auth/presentation/cubits/cubit/login_st
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this.authrepo) : super(LoginInitial());
   final AuthRepository authrepo;
+  
   TextEditingController emailController = TextEditingController();
   bool isVis = true;
   TextEditingController passwordController = TextEditingController();
   GlobalKey<FormState> loginKey = GlobalKey<FormState>();
 
-  bool isLoginPasswordsShowing = true;
-  IconData suffixIcon = Icons.visibility;
-  void changeLoginPasswordSuffixIcon() {
-    isLoginPasswordsShowing = !isLoginPasswordsShowing;
-    suffixIcon =
-        isLoginPasswordsShowing ? Icons.visibility : Icons.visibility_off;
-    emit(ChangeLoginPasswordSuffixIcon());
+  bool obscure = true;
+  bool isVisible = false;
+  IconButton suffixIcon() {
+    return IconButton(
+        onPressed: () {
+          obscure = !obscure;
+          isVisible = !isVisible;
+          emit(ChangeIconButton());
+        },
+        icon: isVisible
+            ? const Icon(Icons.visibility)
+            : const Icon(Icons.visibility_off));
   }
 
   LoginModel? loginModel;
@@ -41,7 +48,10 @@ class LoginCubit extends Cubit<LoginState> {
         key: Apikeys.token,
         value: r.token,
       );
+      sl<GlobalCubit>().getChefData();
       emit(LoginSuccessState());
     });
   }
+
+  
 }

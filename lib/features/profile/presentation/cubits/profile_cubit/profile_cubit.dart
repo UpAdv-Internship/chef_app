@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:up_dev_chef_app/core/cubit/global_cubit.dart';
+import 'package:up_dev_chef_app/core/services/service_locator.dart';
 import 'package:up_dev_chef_app/features/profile/data/repository/profile_repository.dart';
 import 'package:up_dev_chef_app/features/profile/presentation/cubits/profile_cubit/profile_state.dart';
 
@@ -9,11 +11,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   final ProfileRepo profileRepo;
 
-  //! take photo
-  void takePhoto(value) {
-    image = value;
-    emit(TakePhotoSuccessState());
-  }
+  
 
   //! Update Profile
   TextEditingController nameController = TextEditingController();
@@ -26,10 +24,12 @@ class ProfileCubit extends Cubit<ProfileState> {
   XFile? image;
   void updateProfile() async {
     emit(UpdateProfileLoadingState());
+
+
     final res = await profileRepo.updateProfile(
       name: nameController.text,
       phone: phoneController.text,
-      location: locationController.text,
+      location:locationController.text,
       brandName: brandNameController.text,
       minCharge: minChargeController.text,
       disc: discController.text,
@@ -37,9 +37,21 @@ class ProfileCubit extends Cubit<ProfileState> {
     );
     res.fold(
       (l) => emit(UpdateProfileErrorState(l)),
-      (r) => emit(UpdateProfileSuccessState(r)),
+      (r) {
+        sl<GlobalCubit>().getChefData();
+        emit(UpdateProfileSuccessState(r ));
+      },
     );
   }
+  //! take photo
+  void takePhoto(value) {
+    image = value;
+    
+
+    emit(TakePhotoSuccessState());
+  }
+
+  
 
   //! Logout
   void logout() async {

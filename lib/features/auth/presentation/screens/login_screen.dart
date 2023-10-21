@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:up_dev_chef_app/core/cubit/global_cubit.dart';
+import 'package:up_dev_chef_app/core/cubit/global_state.dart';
 import 'package:up_dev_chef_app/core/services/service_locator.dart';
 import 'package:up_dev_chef_app/core/theme/app_theme.dart';
 import 'package:up_dev_chef_app/core/utils/app_colors.dart';
@@ -24,12 +26,13 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final loginCubit = BlocProvider.of<LoginCubit>(context);
+    
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
           child: BlocConsumer<LoginCubit, LoginState>(
             listener: (context, state) {
-              if (state is LoginSuccessState) {
+              if (state is LoginSuccessState ) {
                 showTwist(
                     state: ToastStates.success,
                     messege: AppStrings.loginSuccessful);
@@ -43,8 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 key: BlocProvider.of<LoginCubit>(context).loginKey,
                 child: Column(
                   children: [
-                    //image and welcome text
-
+                    //! Image and welcome text
                     Stack(
                       alignment: AlignmentDirectional.center,
                       children: [
@@ -66,35 +68,30 @@ class _LoginScreenState extends State<LoginScreen> {
                         ))
                       ],
                     ),
-
                     const SizedBox(
                       height: 100,
                     ),
+
                     //two texts Email and password
                     Padding(
                       padding: const EdgeInsets.all(24),
                       child: Column(
                         children: [
                           // Email
-
-                          TextFormField(
+                          CustomTextFormField(
+                            hint: AppStrings.email,
                             controller: BlocProvider.of<LoginCubit>(context)
                                 .emailController,
-                            keyboardType: TextInputType.emailAddress,
-                            cursorColor: AppColors.primary,
-                            decoration: InputDecoration(
-                                hintText: AppStrings.email,
-                                contentPadding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        const BorderSide(color: AppColors.grey),
-                                    borderRadius: BorderRadius.circular(10))),
-                            validator: (data) {
-                              if (data!.isEmpty ||
-                                  !data.contains('@gmail.com')) {
+                            validator: (value) {
+                              if (RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
+                                      .hasMatch(value!) !=
+                                  true) {
+                                return AppStrings.pleaseEnterValidEmail;
+                              }
+                              if (value.isEmpty) {
+                                return AppStrings.pleaseEnterValidEmail;
+                              }
+                              if (value.contains(' ')) {
                                 return AppStrings.pleaseEnterValidEmail;
                               }
                               return null;
@@ -105,54 +102,20 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 32,
                           ),
 
-                          // Passsword
-
-                          TextFormField(
-                            keyboardType: TextInputType.visiblePassword,
+                          // Passsword Text Field
+                          CustomTextFormField(
+                            hint: AppStrings.password,
                             controller: BlocProvider.of<LoginCubit>(context)
                                 .passwordController,
-                            obscureText: BlocProvider.of<LoginCubit>(context)
-                                .isLoginPasswordsShowing,
-                            cursorColor: AppColors.primary,
-                            decoration: InputDecoration(
-                                hintText: AppStrings.password,
-                                contentPadding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        const BorderSide(color: AppColors.grey),
-                                    borderRadius: BorderRadius.circular(10)),
-                                suffixIcon: IconButton(
-                                  onPressed: () {
-                                    BlocProvider.of<LoginCubit>(context)
-                                        .changeLoginPasswordSuffixIcon();
-                                  },
-                                  icon: BlocProvider.of<LoginCubit>(context)
-                                          .isLoginPasswordsShowing
-                                      ? const Icon(
-                                          Icons.visibility_off,
-                                          color: AppColors.primary,
-                                        )
-                                      : const Icon(
-                                          Icons.visibility,
-                                          color: AppColors.primary,
-                                        ),
-                                )),
-                            validator: (data) {
-                              if (data!.length < 6 || data.isEmpty) {
-                                return AppStrings.pleaseEnterValidPassword;
-                              }
-                              return null;
-                            },
-                          ),
-                          const SizedBox(
-                            height: 24,
-                          ),
+                            keyboardType: TextInputType.visiblePassword,
+                            showSuffix: true,
+                            suffixIcon: BlocProvider.of<LoginCubit>(context)
+                                .suffixIcon(),
+                            isObscure:
+                                BlocProvider.of<LoginCubit>(context).obscure,
 
-                          // ForgetPass
-
+                            // changeSuffix: BlocProvider.of<LoginCubit>(context).changeSuffixIcon(),
+                          ),
                           Row(
                             children: [
                               TextButton(
@@ -177,26 +140,44 @@ class _LoginScreenState extends State<LoginScreen> {
                               : SizedBox(
                                   height: 50,
                                   width: 190,
-                                  child: ElevatedButton(
-                                    onPressed: () async {
-                                      bool internetCheacker =
-                                          await sl<InternetConnectionChecker>()
+                                  child:
+                                      BlocConsumer<GlobalCubit, GlobalState>(
+                                        
+                                    listener: (context, state) {
+                                      if(state is GetChefDataLoadingState){
+                                        const Center(child: CircularProgressIndicator(),);
+                                      }
+                                      
+                                    },
+                                    builder: (context, state) {
+                                      final globalCubit = BlocProvider.of<GlobalCubit>(context);
+                                      return ElevatedButton(
+                                        onPressed: () async {
+                                          bool internetCheacker = await sl<
+                                                  InternetConnectionChecker>()
                                               .hasConnection;
 
-                                      if (loginCubit.loginKey.currentState!
-                                          .validate()) {
-                                        if (internetCheacker == true) {
-                                          loginCubit.login();
-                                        } else {
-                                          showTwist(
-                                              messege: "No Internet connection",
-                                              state: ToastStates.error);
-                                        }
-                                      }
+                                          if (loginCubit.loginKey.currentState!
+                                              .validate()) {
+                                            if (internetCheacker == true) {
+                                              loginCubit.login();
+                                            }
+                                            if (internetCheacker == true) {
+                                              globalCubit.getChefData();
+                                            } else {
+                                              showTwist(
+                                                  messege:
+                                                      "No Internet connection",
+                                                  state: ToastStates.error);
+                                            }
+                                          }
+                                        },
+                                        style: getAppTheme()
+                                            .elevatedButtonTheme
+                                            .style,
+                                        child: const Text(AppStrings.login),
+                                      );
                                     },
-                                    style:
-                                        getAppTheme().elevatedButtonTheme.style,
-                                    child: const Text(AppStrings.login),
                                   ),
                                 ),
                           const SizedBox(

@@ -14,3 +14,5 @@ final class SignUpFailureState extends SignupState {
 }
 
 final class ChangeImageState extends SignupState {}
+
+final class ChangeIconButton extends SignupState {}
