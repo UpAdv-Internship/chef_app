@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geocoding/geocoding.dart';
@@ -30,7 +33,7 @@ class SignupCubit extends Cubit<SignupState> {
   String? email;
   String? password;
   String? confirmPassword;
-  String? location;
+  Map? location;
   String? brandName;
   String? minCharge;
   String? disc;
@@ -62,7 +65,7 @@ class SignupCubit extends Cubit<SignupState> {
       email: email!,
       password: password!,
       confirmPassword: confirmPassword!,
-      location: location!,
+      location: jsonEncode(location),
       brandName: brandName!,
       minCharge: minCharge!,
       disc: disc!,
@@ -93,7 +96,9 @@ class SignupCubit extends Cubit<SignupState> {
         return Future.error('Location not available !');
       }
     } else {
-      print('Location not available !');
+      if (kDebugMode) {
+        print('Location not available !');
+      }
     }
 
     return await Geolocator.getCurrentPosition();
@@ -107,15 +112,18 @@ class SignupCubit extends Cubit<SignupState> {
 
       Placemark place = placemark[0];
 
-
       currentAddress = '${place.country},${place.locality},${place.street},';
 
-      location="{'country':${place.country},'address':${place.locality},'street':${place.street}}";
-
+      location = {
+        "name": place.country,
+        "address": place.locality,
+        "coordinates": [latitude, longitude]
+      };
       emit(SignUpSuccessState());
-
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 }
