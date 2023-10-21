@@ -9,11 +9,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   final ProfileRepo profileRepo;
 
-  //! take photo
-  void takePhoto(value) {
-    image = value;
-    emit(TakePhotoSuccessState());
-  }
+  
 
   //! Update Profile
   TextEditingController nameController = TextEditingController();
@@ -26,10 +22,12 @@ class ProfileCubit extends Cubit<ProfileState> {
   XFile? image;
   void updateProfile() async {
     emit(UpdateProfileLoadingState());
+
+
     final res = await profileRepo.updateProfile(
       name: nameController.text,
       phone: phoneController.text,
-      location: locationController.text,
+      location:locationController.text,
       brandName: brandNameController.text,
       minCharge: minChargeController.text,
       disc: discController.text,
@@ -40,6 +38,14 @@ class ProfileCubit extends Cubit<ProfileState> {
       (r) => emit(UpdateProfileSuccessState(r)),
     );
   }
+  //! take photo
+  void takePhoto(value) {
+    image = value;
+    
+
+    emit(TakePhotoSuccessState());
+  }
+  
 
   //! Logout
   void logout() async {

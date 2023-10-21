@@ -1,8 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:up_dev_chef_app/core/cubit/global_cubit.dart';
+import 'package:up_dev_chef_app/core/cubit/global_state.dart';
 import 'package:up_dev_chef_app/core/utils/app_assets.dart';
 import 'package:up_dev_chef_app/core/utils/app_colors.dart';
 import 'package:up_dev_chef_app/core/utils/app_router.dart';
@@ -20,11 +20,10 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         body: Column(
           children: [
-            BlocBuilder<ProfileCubit, ProfileState>(
+            BlocConsumer<ProfileCubit, ProfileState>(
+              listener: (context, state) {},
               builder: (context, state) {
-                final profileCubit = BlocProvider.of<ProfileCubit>(context);
                 return Stack(
-                  // fit: StackFit.loose,
                   clipBehavior: Clip.none,
                   alignment: Alignment.center,
                   children: [
@@ -34,42 +33,54 @@ class HomeScreen extends StatelessWidget {
                       width: double.infinity,
                     ),
                     Positioned(
-                      top: 60.h,                      
-                      child: Column(
-                        children: [
-                          // const CircleAvatar(
-                          //   radius: 75,
-                          //   backgroundImage: AssetImage(AppAssets.profile),
-                          // ),
-                          profileCubit.image != null
-                              ? CircleAvatar(
-                                  radius: 80,
-                                  backgroundImage: FileImage(
-                                    File(profileCubit.image!.path),
-                                  ),
-                                )
-                              : Image.asset(AppAssets.imagePicker),
-                          SizedBox(
-                            height: 5.h,
-                          ),
-                          Text(
-                            'Mahmoud',
-                            style: Theme.of(context)
-                                .textTheme
-                                .displayLarge!
-                                .copyWith(color: AppColors.black),
-                          ),
-                          SizedBox(
-                            height: 5.h,
-                          ),
-                          Text(
-                            'mahmoudmagdy@gmail.com',
-                            style: Theme.of(context)
-                                .textTheme
-                                .displayMedium!
-                                .copyWith(color: AppColors.grey, fontSize: 14),
-                          ),
-                        ],
+                      top: 60.h,
+                      child: BlocConsumer<GlobalCubit, GlobalState>(
+                        listener: (context, state) {},
+                        builder: (context, state) {
+                          final globalCubit =
+                              BlocProvider.of<GlobalCubit>(context);
+                          return Column(
+                            children: [
+                              state is GetChefDataLoadingState
+                                  ? const CircularProgressIndicator()
+                                  : CircleAvatar(
+                                      radius: 80,
+                                      backgroundImage: NetworkImage(
+                                          globalCubit.getChefModel!.profilePic),
+                                    ),
+
+                              SizedBox(
+                                height: 5.h,
+                              ),
+                              //! email text
+                              state is GetChefDataLoadingState
+                                  ? const CircularProgressIndicator()
+                                  : Text(
+                                      globalCubit.getChefModel!.name,
+                                      // context.read<ProfileCubit>().getChefModel!.email,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displayLarge!
+                                          .copyWith(color: AppColors.black),
+                                    ),
+                              SizedBox(
+                                height: 5.h,
+                              ),
+                              //! email text
+                              state is GetChefDataLoadingState
+                                  ? const CircleAvatar()
+                                  : Text(
+                                      globalCubit.getChefModel!.email,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displayMedium!
+                                          .copyWith(
+                                              color: AppColors.grey,
+                                              fontSize: 14),
+                                    ),
+                            ],
+                          );
+                        },
                       ),
                     ),
                   ],

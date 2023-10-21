@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:up_dev_chef_app/core/cubit/global_cubit.dart';
+import 'package:up_dev_chef_app/core/cubit/global_state.dart';
 import 'package:up_dev_chef_app/core/services/service_locator.dart';
 import 'package:up_dev_chef_app/core/theme/app_theme.dart';
 import 'package:up_dev_chef_app/core/utils/app_colors.dart';
@@ -24,12 +26,13 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final loginCubit = BlocProvider.of<LoginCubit>(context);
+    
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
           child: BlocConsumer<LoginCubit, LoginState>(
             listener: (context, state) {
-              if (state is LoginSuccessState) {
+              if (state is LoginSuccessState ) {
                 showTwist(
                     state: ToastStates.success,
                     messege: AppStrings.loginSuccessful);
@@ -177,26 +180,44 @@ class _LoginScreenState extends State<LoginScreen> {
                               : SizedBox(
                                   height: 50,
                                   width: 190,
-                                  child: ElevatedButton(
-                                    onPressed: () async {
-                                      bool internetCheacker =
-                                          await sl<InternetConnectionChecker>()
+                                  child:
+                                      BlocConsumer<GlobalCubit, GlobalState>(
+                                        
+                                    listener: (context, state) {
+                                      if(state is GetChefDataLoadingState){
+                                        const Center(child: CircularProgressIndicator(),);
+                                      }
+                                      
+                                    },
+                                    builder: (context, state) {
+                                      final globalCubit = BlocProvider.of<GlobalCubit>(context);
+                                      return ElevatedButton(
+                                        onPressed: () async {
+                                          bool internetCheacker = await sl<
+                                                  InternetConnectionChecker>()
                                               .hasConnection;
 
-                                      if (loginCubit.loginKey.currentState!
-                                          .validate()) {
-                                        if (internetCheacker == true) {
-                                          loginCubit.login();
-                                        } else {
-                                          showTwist(
-                                              messege: "No Internet connection",
-                                              state: ToastStates.error);
-                                        }
-                                      }
+                                          if (loginCubit.loginKey.currentState!
+                                              .validate()) {
+                                            if (internetCheacker == true) {
+                                              loginCubit.login();
+                                            }
+                                            if (internetCheacker == true) {
+                                              globalCubit.getChefData();
+                                            } else {
+                                              showTwist(
+                                                  messege:
+                                                      "No Internet connection",
+                                                  state: ToastStates.error);
+                                            }
+                                          }
+                                        },
+                                        style: getAppTheme()
+                                            .elevatedButtonTheme
+                                            .style,
+                                        child: const Text(AppStrings.login),
+                                      );
                                     },
-                                    style:
-                                        getAppTheme().elevatedButtonTheme.style,
-                                    child: const Text(AppStrings.login),
                                   ),
                                 ),
                           const SizedBox(
