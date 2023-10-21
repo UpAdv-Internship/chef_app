@@ -29,4 +29,3 @@ final class LogoutLoadingState extends ProfileState {}
 final class TakePhotoSuccessState extends ProfileState {}
 
 
-

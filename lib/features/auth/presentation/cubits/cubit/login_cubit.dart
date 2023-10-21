@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:up_dev_chef_app/core/cubit/global_cubit.dart';
 import 'package:up_dev_chef_app/core/databases/api/end_points.dart';
 import 'package:up_dev_chef_app/core/databases/cache/cache_helper.dart';
 import 'package:up_dev_chef_app/core/services/service_locator.dart';
@@ -11,6 +12,7 @@ import 'package:up_dev_chef_app/features/auth/presentation/cubits/cubit/login_st
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this.authrepo) : super(LoginInitial());
   final AuthRepository authrepo;
+  
   TextEditingController emailController = TextEditingController();
   bool isVis = true;
   TextEditingController passwordController = TextEditingController();
@@ -41,6 +43,7 @@ class LoginCubit extends Cubit<LoginState> {
         key: Apikeys.token,
         value: r.token,
       );
+      sl<GlobalCubit>().getChefData();
       emit(LoginSuccessState());
     });
   }

@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,16 +44,18 @@ class HomeScreen extends StatelessWidget {
                             children: [
                               state is GetChefDataLoadingState
                                   ? const CircularProgressIndicator()
-                                  : CircleAvatar(
+                                  :   
+                                  CircleAvatar(
                                       radius: 80,
-                                      backgroundImage: NetworkImage(
+                                      backgroundImage:                                    
+                                       NetworkImage(
                                           globalCubit.getChefModel!.profilePic),
                                     ),
 
                               SizedBox(
                                 height: 5.h,
                               ),
-                              //! email text
+                              //! name text
                               state is GetChefDataLoadingState
                                   ? const CircularProgressIndicator()
                                   : Text(
