@@ -22,13 +22,12 @@ class ProfileCubit extends Cubit<ProfileState> {
   XFile? image;
   void updateProfile() async {
     emit(UpdateProfileLoadingState());
-        print(image!.name);
+
 
     final res = await profileRepo.updateProfile(
       name: nameController.text,
       phone: phoneController.text,
       location:locationController.text,
-
       brandName: brandNameController.text,
       minCharge: minChargeController.text,
       disc: discController.text,
@@ -43,7 +42,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   void takePhoto(value) {
     image = value;
     
-    print(image!.name);
+
     emit(TakePhotoSuccessState());
   }
   

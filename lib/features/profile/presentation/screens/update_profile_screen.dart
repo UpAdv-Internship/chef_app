@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -44,9 +42,7 @@ class UpdateProfileScreen extends StatelessWidget {
                 return Form(
                   key: profileCubit.updateProfileKey,
                   child: BlocConsumer<GlobalCubit, GlobalState>(
-                    listener: (context, state) {
-                      // TODO: implement listener
-                    },
+                    listener: (context, state) {},
                     builder: (context, state) {
                       return Column(
                         children: [
@@ -56,21 +52,23 @@ class UpdateProfileScreen extends StatelessWidget {
                             child: Stack(
                               children: [
                                 Align(
-                                  alignment: Alignment.center,
-                                  child: profileCubit.image != null
-                                      ? CustomFileImage(image: profileCubit.image,)
-                                      :
-                                      
-                                       CustomFileImage(image: globalCubit.profileImage,)
-                                          //right
-                                          //  NetworkImage(
-                                          //     globalCubit
-                                          //         .getChefModel!.profilePic)
-                                          // backgroundImage: FileImage(
-                                          //   File(profileCubit.image!.path),
-                                          // ),
-                                        // ),
-                                ),
+                                    alignment: Alignment.center,
+                                    child: profileCubit.image != null
+                                        ? CustomFileImage(
+                                            image: profileCubit.image,
+                                          )
+                                        : CustomFileImage(
+                                            image: globalCubit.profileImage,
+                                          )
+                                    //right
+                                    //  NetworkImage(
+                                    //     globalCubit
+                                    //         .getChefModel!.profilePic)
+                                    // backgroundImage: FileImage(
+                                    //   File(profileCubit.image!.path),
+                                    // ),
+                                    // ),
+                                    ),
                                 Positioned.directional(
                                   textDirection: Directionality.of(context),
                                   bottom: 0,
@@ -151,27 +149,28 @@ class UpdateProfileScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 15),
                           //! Update Button
-                          state is UpdateProfileLoadingState?const CircularProgressIndicator(): ElevatedButton(
-                            onPressed: () {
-                              if (profileCubit.updateProfileKey.currentState!
-                                  .validate()) {
-                                print(profileCubit.image!.name);
-
-                                profileCubit.updateProfile();
-                                // state is UpdateProfileLoadingState
-                                //     ? const CircularProgressIndicator()
-                                //     : profileCubit.getChefData();
-                              }
-                              // profileCubit.updateProfile();
-                              // state is UpdateProfileLoadingState
-                              //       ? const Center(child: CircularProgressIndicator())
-                              //       : profileCubit.getChefData();
-                            },
-                            style: ElevatedButton.styleFrom(
-                              fixedSize: Size(double.maxFinite, 50.h),
-                            ),
-                            child: const Text(AppStrings.save),
-                          ),
+                          state is UpdateProfileLoadingState
+                              ? const CircularProgressIndicator()
+                              : ElevatedButton(
+                                  onPressed: () {
+                                    if (profileCubit
+                                        .updateProfileKey.currentState!
+                                        .validate()) {
+                                      profileCubit.updateProfile();
+                                      // state is UpdateProfileLoadingState
+                                      //     ? const CircularProgressIndicator()
+                                      //     : profileCubit.getChefData();
+                                    }
+                                    // profileCubit.updateProfile();
+                                    // state is UpdateProfileLoadingState
+                                    //       ? const Center(child: CircularProgressIndicator())
+                                    //       : profileCubit.getChefData();
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    fixedSize: Size(double.maxFinite, 50.h),
+                                  ),
+                                  child: const Text(AppStrings.save),
+                                ),
                         ],
                       );
                     },

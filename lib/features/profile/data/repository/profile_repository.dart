@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:up_dev_chef_app/core/common/commons.dart';
 import 'package:up_dev_chef_app/core/databases/api/api_consumer.dart';
 import 'package:up_dev_chef_app/core/databases/api/end_points.dart';
 import 'package:up_dev_chef_app/core/databases/cache/cache_helper.dart';
@@ -20,7 +21,6 @@ class ProfileRepo {
   }) async {
     try {
 
-      print('repo${profilePic.name}');
       final res = await sl<ApiConsumer>().patch(
         EndPoint.updateChef,
         data: {
@@ -30,7 +30,7 @@ class ProfileRepo {
           Apikeys.brandName: brandName,
           Apikeys.minCharge: minCharge,
           Apikeys.disc: disc,
-          Apikeys.profilePic: profilePic,
+          Apikeys.profilePic: await uploadImageToAPI(profilePic),
         },
         isFormData: true,
       );
@@ -39,6 +39,7 @@ class ProfileRepo {
       return Left(e.errorModel.errorMessage);
     }
   }
+
   //! Change Password
   //! get chef data
   Future<Either<String, GetDataChefModel>> getChefData() async {

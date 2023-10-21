@@ -1,6 +1,3 @@
-
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,16 +21,9 @@ class HomeScreen extends StatelessWidget {
         body: Column(
           children: [
             BlocConsumer<ProfileCubit, ProfileState>(
-              listener: (context, state) {
-                // if(  state is GetChefDataLoadingState ){
-                //   const Center(child: CircularProgressIndicator());
-                // }
-              },
+              listener: (context, state) {},
               builder: (context, state) {
-                // final profileCubit = BlocProvider.of<ProfileCubit>(context);
-                final globalCubit = BlocProvider.of<GlobalCubit>(context);
                 return Stack(
-                  // fit: StackFit.loose,
                   clipBehavior: Clip.none,
                   alignment: Alignment.center,
                   children: [
@@ -45,26 +35,24 @@ class HomeScreen extends StatelessWidget {
                     Positioned(
                       top: 60.h,
                       child: BlocConsumer<GlobalCubit, GlobalState>(
-                        listener: (context, state) {
-                          
-                        },
+                        listener: (context, state) {},
                         builder: (context, state) {
-                          final globalCubit = BlocProvider.of<GlobalCubit>(context);
+                          final globalCubit =
+                              BlocProvider.of<GlobalCubit>(context);
                           return Column(
                             children: [
-                            
-                           state is GetChefDataLoadingState ?const CircularProgressIndicator():   CircleAvatar(
-                                radius: 80,
-                                backgroundImage: FileImage(File(globalCubit.profileImage!.path))
-
-                                // NetworkImage(
-                                //     globalCubit.getChefModel!.profilePic),
-                              ),
+                              state is GetChefDataLoadingState
+                                  ? const CircularProgressIndicator()
+                                  : CircleAvatar(
+                                      radius: 80,
+                                      backgroundImage: NetworkImage(
+                                          globalCubit.getChefModel!.profilePic),
+                                    ),
 
                               SizedBox(
                                 height: 5.h,
                               ),
-                               //! email text 
+                              //! email text
                               state is GetChefDataLoadingState
                                   ? const CircularProgressIndicator()
                                   : Text(
@@ -78,7 +66,7 @@ class HomeScreen extends StatelessWidget {
                               SizedBox(
                                 height: 5.h,
                               ),
-                              //! email text 
+                              //! email text
                               state is GetChefDataLoadingState
                                   ? const CircleAvatar()
                                   : Text(
