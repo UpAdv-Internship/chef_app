@@ -36,6 +36,7 @@ class SignupCubit extends Cubit<SignupState> {
   XFile? frontId;
   XFile? backId;
   XFile? profilePic;
+  
   int currentStep = 0;
   increaseStepperIndex() {
     currentStep++;
