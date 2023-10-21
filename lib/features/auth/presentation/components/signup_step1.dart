@@ -9,10 +9,10 @@ class SignUpStep1 extends StatelessWidget {
   const SignUpStep1({super.key});
   @override
   Widget build(BuildContext context) {
-    final signupCubit = BlocProvider.of<SignupCubit>(context);
     return BlocConsumer<SignupCubit, SignupState>(
       listener: (context, state) {},
       builder: (context, state) {
+        final signupCubit = BlocProvider.of<SignupCubit>(context);
         return Form(
           key: signupCubit.signUpStep1FormKey,
           child: Column(
@@ -55,29 +55,35 @@ class SignUpStep1 extends StatelessWidget {
               const SizedBox(height: 10),
               //! Password Text Field
               CustomTextFormField(
-                onChanged: (password) {
-                  signupCubit.password = password;
-                },
-                controller: signupCubit.passwordTextEditingController,
                 hint: AppStrings.password,
+                controller: signupCubit.passwordTextEditingController,
+                keyboardType: TextInputType.visiblePassword,
                 showSuffix: true,
+                suffixIcon: signupCubit.suffixIcon(),
+                isObscure: signupCubit.obscure,
+
+                // changeSuffix: BlocProvider.of<LoginCubit>(context).changeSuffixIcon(),
               ),
               const SizedBox(height: 10),
-              //! Password Text Field
+              //! Password Confirm Text Field
               CustomTextFormField(
                 onChanged: (confirmPassword) {
                   signupCubit.confirmPassword = confirmPassword;
                 },
-                controller: signupCubit.confirmPasswordTextEditingController,
+                controller:
+                    signupCubit.confirmPasswordTextEditingController,
                 hint: AppStrings.confirmPassword,
                 showSuffix: true,
+                suffixIcon: signupCubit.confirmSuffixIcon(),
+                isObscure: signupCubit.confirmObscure,
               ),
 
               const SizedBox(height: 50),
               //!Buttons
               ElevatedButton(
                 onPressed: () {
-                  if (signupCubit.signUpStep1FormKey.currentState!.validate()) {
+                  if (signupCubit.signUpStep1FormKey.currentState!
+                      .validate()) {
                     signupCubit.increaseStepperIndex();
                   }
                 },

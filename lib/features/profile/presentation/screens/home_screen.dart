@@ -162,9 +162,10 @@ class HomeScreen extends StatelessWidget {
                           if (state is LogoutSuccessState) {
                             navigateReplacment(
                                 context: context, route: Routes.login);
+                            // sl<CacheHelper>().clearData(key: 'token');
                           }
                         },
-                        builder: (context, state) {
+                        builder: (context, pstate) {
                           return InkWell(
                             onTap: () {
                               BlocProvider.of<ProfileCubit>(context).logout();

@@ -18,13 +18,18 @@ class LoginCubit extends Cubit<LoginState> {
   TextEditingController passwordController = TextEditingController();
   GlobalKey<FormState> loginKey = GlobalKey<FormState>();
 
-  bool isLoginPasswordsShowing = true;
-  IconData suffixIcon = Icons.visibility;
-  void changeLoginPasswordSuffixIcon() {
-    isLoginPasswordsShowing = !isLoginPasswordsShowing;
-    suffixIcon =
-        isLoginPasswordsShowing ? Icons.visibility : Icons.visibility_off;
-    emit(ChangeLoginPasswordSuffixIcon());
+  bool obscure = true;
+  bool isVisible = false;
+  IconButton suffixIcon() {
+    return IconButton(
+        onPressed: () {
+          obscure = !obscure;
+          isVisible = !isVisible;
+          emit(ChangeIconButton());
+        },
+        icon: isVisible
+            ? const Icon(Icons.visibility)
+            : const Icon(Icons.visibility_off));
   }
 
   LoginModel? loginModel;
