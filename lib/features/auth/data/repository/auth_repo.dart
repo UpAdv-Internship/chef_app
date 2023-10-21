@@ -49,6 +49,7 @@ class AuthRepository {
     try {
       final response = await sl<ApiConsumer>().post(
         EndPoint.chefSignUp,
+        isFormData: true,
         data: {
           Apikeys.name: name,
           Apikeys.phone: phone,
@@ -59,10 +60,10 @@ class AuthRepository {
           Apikeys.brandName: brandName,
           Apikeys.minCharge: minCharge,
           Apikeys.disc: disc,
-          Apikeys.healthCertificate: uploadImageToAPI(healthCertificate),
-          Apikeys.frontId: uploadImageToAPI(frontId),
-          Apikeys.backId: uploadImageToAPI(backId),
-          Apikeys.profilePic: uploadImageToAPI(profilePic),
+          Apikeys.healthCertificate: await uploadImageToAPI(healthCertificate),
+          Apikeys.frontId: await uploadImageToAPI(frontId),
+          Apikeys.backId: await uploadImageToAPI(backId),
+          Apikeys.profilePic: await uploadImageToAPI(profilePic),
         },
       );
       return Right(SignUpModel.fromJson(response));
