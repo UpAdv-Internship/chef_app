@@ -1,62 +1,14 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:up_dev_chef_app/core/Widgets/custom_text_field.dart';
 import 'package:up_dev_chef_app/core/utils/app_colors.dart';
 import 'package:up_dev_chef_app/core/utils/app_strings.dart';
 import 'package:up_dev_chef_app/features/auth/presentation/cubits/cubit/signup_cubit.dart';
 import 'package:up_dev_chef_app/features/auth/presentation/cubits/cubit/signup_state.dart';
 
-class SignUpStep3 extends StatefulWidget {
+class SignUpStep3 extends StatelessWidget  {
   const SignUpStep3({super.key});
-
-  @override
-  State<SignUpStep3> createState() => _SignUpStep3State();
-}
-
-class _SignUpStep3State extends State<SignUpStep3> {
-  Position? _currentPosition;
-  String? _currentAddress;
-  bool isLoading = false;
-
-  Future<Position> _getPosition() async {
-    LocationPermission permission;
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-
-      if (permission == LocationPermission.deniedForever) {
-        return Future.error('Location not available !');
-      }
-    } else {
-      if (kDebugMode) {
-        print('Location not available !');
-      }
-    }
-
-    return await Geolocator.getCurrentPosition();
-  }
-
-  void _getAdress(latitude, longitude) async {
-    try {
-      List<Placemark> placemark = await GeocodingPlatform.instance
-          .placemarkFromCoordinates(latitude, longitude);
-
-      Placemark place = placemark[0];
-
-      setState(() {
-        _currentAddress = '${place.country},${place.locality},${place.street},';
-      });
-    } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +23,7 @@ class _SignUpStep3State extends State<SignUpStep3> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               SizedBox(height: 20.h),
+              /*
               //! Enter Address
               Text(
                 AppStrings.enterYourLocation,
@@ -88,23 +41,27 @@ class _SignUpStep3State extends State<SignUpStep3> {
                 controller: signupCubit.locationTextEditingController,
               ),
               SizedBox(height: 10.h),
+              */
               //! Auto Location
-              isLoading
+              signupCubit.isLoading
                   ? const CircularProgressIndicator()
                   : Row(
                       children: [
                         IconButton(
                           onPressed: () async {
-                            setState(() {
-                              isLoading = true;
-                            });
-                            _currentPosition = await _getPosition();
 
-                            _getAdress(_currentPosition!.latitude,
-                                _currentPosition!.longitude);
-                            setState(() {
-                              isLoading = false;
-                            });
+                              signupCubit.isLoading = true;
+
+
+                              signupCubit.currentPosition =
+                              await signupCubit.getPosition();
+
+                              signupCubit.getAdress(
+                                  signupCubit.currentPosition!.latitude,
+                                  signupCubit.currentPosition!.longitude);
+
+                              signupCubit.isLoading = false;
+
                           },
                           icon: const Icon(
                             Icons.map,
@@ -113,11 +70,11 @@ class _SignUpStep3State extends State<SignUpStep3> {
                         ),
                         const Spacer(),
                         //const Text(AppStrings.address),
-                        if (_currentAddress != null)
+                        if (signupCubit.currentAddress != null)
                           SizedBox(
                               width: 300,
                               child: Text(
-                                _currentAddress!,
+                                signupCubit.currentAddress!,
                                 style: const TextStyle(fontSize: 20),
                               )),
                       ],
