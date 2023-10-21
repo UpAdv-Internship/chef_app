@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:up_dev_chef_app/core/services/service_locator.dart';
 import 'package:up_dev_chef_app/core/theme/app_theme.dart';
 import 'package:up_dev_chef_app/core/utils/app_colors.dart';
 import 'package:up_dev_chef_app/core/utils/app_router.dart';
@@ -7,6 +9,7 @@ import 'package:up_dev_chef_app/core/utils/commons.dart';
 import 'package:up_dev_chef_app/features/auth/presentation/cubits/cubit/login_cubit.dart';
 import 'package:up_dev_chef_app/features/auth/presentation/cubits/cubit/login_state.dart';
 
+import '../../../../core/common/commons.dart';
 import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_strings.dart';
 
@@ -20,12 +23,16 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
+    final loginCubit = BlocProvider.of<LoginCubit>(context);
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
           child: BlocConsumer<LoginCubit, LoginState>(
             listener: (context, state) {
               if (state is LoginSuccessState) {
+                showTwist(
+                    state: ToastStates.success,
+                    messege: AppStrings.loginSuccessful);
                 navigateReplacment(context: context, route: Routes.home);
                 BlocProvider.of<LoginCubit>(context).emailController.clear();
                 BlocProvider.of<LoginCubit>(context).passwordController.clear();
@@ -165,17 +172,33 @@ class _LoginScreenState extends State<LoginScreen> {
 
                           //elevated button
 
-                          SizedBox(
-                            height: 50,
-                            width: 190,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                BlocProvider.of<LoginCubit>(context).login();
-                              },
-                              style: getAppTheme().elevatedButtonTheme.style,
-                              child: const Text(AppStrings.login),
-                            ),
-                          ),
+                          state is LoginLoadingState
+                              ? const CircularProgressIndicator()
+                              : SizedBox(
+                                  height: 50,
+                                  width: 190,
+                                  child: ElevatedButton(
+                                    onPressed: () async {
+                                      bool internetCheacker =
+                                          await sl<InternetConnectionChecker>()
+                                              .hasConnection;
+
+                                      if (loginCubit.loginKey.currentState!
+                                          .validate()) {
+                                        if (internetCheacker == true) {
+                                          loginCubit.login();
+                                        } else {
+                                          showTwist(
+                                              messege: "No Internet connection",
+                                              state: ToastStates.error);
+                                        }
+                                      }
+                                    },
+                                    style:
+                                        getAppTheme().elevatedButtonTheme.style,
+                                    child: const Text(AppStrings.login),
+                                  ),
+                                ),
                           const SizedBox(
                             height: 20,
                           ),

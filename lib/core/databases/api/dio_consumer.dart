@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:up_dev_chef_app/core/error/error_model.dart';
 import 'package:up_dev_chef_app/core/error/exception.dart';
+import 'package:up_dev_chef_app/core/services/service_locator.dart';
 
 import 'api_consumer.dart';
 import 'api_interceptors.dart';
@@ -8,7 +10,6 @@ import 'end_points.dart';
 
 class DioConsumer extends ApiConsumer {
   final Dio dio;
-
   DioConsumer(this.dio) {
     dio.options.baseUrl = EndPoint.baseUrl;
     dio.options.contentType = Headers.jsonContentType;
@@ -24,45 +25,61 @@ class DioConsumer extends ApiConsumer {
   @override
   Future delete(String path,
       {Object? data, Map<String, dynamic>? queryParameters}) async {
-    try {
-      var res = await dio.delete(
-        path,
-        data: data,
-        queryParameters: queryParameters,
-      );
-      return res.data;
-    } on DioException catch (e) {
-      handleDioException(e);
+    bool internetCheacker = await sl<InternetConnectionChecker>().hasConnection;
+
+    if (internetCheacker == true) {
+      try {
+        var res = await dio.delete(
+          path,
+          data: data,
+          queryParameters: queryParameters,
+        );
+        return res.data;
+      } on DioException catch (e) {
+        handleDioException(e);
+      }
     }
   }
 
   @override
   Future get(String path,
       {Object? data, Map<String, dynamic>? queryParameters}) async {
-    try {
-      var res = await dio.get(
-        path,
-        data: data,
-        queryParameters: queryParameters,
-      );
-      return res.data;
-    } on DioException catch (e) {
-      handleDioException(e);
+    bool internetCheacker = await sl<InternetConnectionChecker>().hasConnection;
+
+    if (internetCheacker == true) {
+      try {
+        var res = await dio.get(
+          path,
+          data: data,
+          queryParameters: queryParameters,
+        );
+        return res.data;
+      } on DioException catch (e) {
+        handleDioException(e);
+      }
     }
   }
 
   @override
-  Future patch(String path,
-      {dynamic data, Map<String, dynamic>? queryParameters,bool isFormData=false,}) async {
-    try {
-      var res = await dio.patch(
-        path,
-        data:isFormData?FormData.fromMap(data): data,
-        queryParameters: queryParameters,
-      );
-      return res.data;
-    } on DioException catch (e) {
-      handleDioException(e);
+  Future patch(
+    String path, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    bool isFormData = false,
+  }) async {
+    bool internetCheacker = await sl<InternetConnectionChecker>().hasConnection;
+
+    if (internetCheacker == true) {
+      try {
+        var res = await dio.patch(
+          path,
+          data: isFormData ? FormData.fromMap(data) : data,
+          queryParameters: queryParameters,
+        );
+        return res.data;
+      } on DioException catch (e) {
+        handleDioException(e);
+      }
     }
   }
 
@@ -71,17 +88,21 @@ class DioConsumer extends ApiConsumer {
     String path, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
-    bool isFormData=false,
+    bool isFormData = false,
   }) async {
-    try {
-      var res = await dio.post(
-        path,
-        data:isFormData?FormData.fromMap(data): data,
-        queryParameters: queryParameters,
-      );
-      return res.data;
-    } on DioException catch (e) {
-      handleDioException(e);
+    bool internetCheacker = await sl<InternetConnectionChecker>().hasConnection;
+
+    if (internetCheacker == true) {
+      try {
+        var res = await dio.post(
+          path,
+          data: isFormData ? FormData.fromMap(data) : data,
+          queryParameters: queryParameters,
+        );
+        return res.data;
+      } on DioException catch (e) {
+        handleDioException(e);
+      }
     }
   }
 
