@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+
+import 'package:up_dev_chef_app/core/databases/api/end_points.dart';
+import 'package:up_dev_chef_app/core/databases/cache/cache_helper.dart';
+import 'package:up_dev_chef_app/core/services/service_locator.dart';
 import 'package:up_dev_chef_app/core/utils/app_assets.dart';
 import 'package:up_dev_chef_app/core/utils/app_router.dart';
 import 'package:up_dev_chef_app/core/utils/app_strings.dart';
@@ -15,11 +19,18 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     navigateAfterThreeSeconds();
+    // BlocProvider.of<GlobalCubit>(context).getChefData();
     super.initState();
   }
 
   void navigateAfterThreeSeconds() {
     Future.delayed(const Duration(seconds: 3)).then((value) async {
+      //  await sl<CacheHelper>().getData(
+      //           key: Apikeys.token,
+      //         ) ==
+      //         null
+      //     ? navigate(context: context, route: Routes.login)
+      //     : navigate(context: context, route: Routes.home);
       navigate(context: context, route: Routes.login);
     });
   }

@@ -31,19 +31,21 @@ class UpdateProfileScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(24),
             child: BlocConsumer<ProfileCubit, ProfileState>(
-              listener: (context, state) {
-                if (state is UpdateProfileSuccessState) {
-                  navigateReplacment(context: context, route: Routes.home);
-                }
-              },
+              listener: (context, state) {},
               builder: (context, state) {
                 final profileCubit = BlocProvider.of<ProfileCubit>(context);
-                final globalCubit = BlocProvider.of<GlobalCubit>(context);
+
                 return Form(
                   key: profileCubit.updateProfileKey,
                   child: BlocConsumer<GlobalCubit, GlobalState>(
-                    listener: (context, state) {},
+                    listener: (context, state) {
+                      if (state is GetChefDataSuccessState) {
+                        navigateReplacment(
+                            context: context, route: Routes.home);
+                      }
+                    },
                     builder: (context, state) {
+                      final globalCubit = BlocProvider.of<GlobalCubit>(context);
                       return Column(
                         children: [
                           //! Image
@@ -59,16 +61,7 @@ class UpdateProfileScreen extends StatelessWidget {
                                           )
                                         : CustomFileImage(
                                             image: globalCubit.profileImage,
-                                          )
-                                    //right
-                                    //  NetworkImage(
-                                    //     globalCubit
-                                    //         .getChefModel!.profilePic)
-                                    // backgroundImage: FileImage(
-                                    //   File(profileCubit.image!.path),
-                                    // ),
-                                    // ),
-                                    ),
+                                          )),
                                 Positioned.directional(
                                   textDirection: Directionality.of(context),
                                   bottom: 0,
@@ -149,7 +142,7 @@ class UpdateProfileScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 15),
                           //! Update Button
-                          state is UpdateProfileLoadingState
+                          state is GetChefDataLoadingState
                               ? const CircularProgressIndicator()
                               : ElevatedButton(
                                   onPressed: () {
@@ -157,14 +150,9 @@ class UpdateProfileScreen extends StatelessWidget {
                                         .updateProfileKey.currentState!
                                         .validate()) {
                                       profileCubit.updateProfile();
-                                      // state is UpdateProfileLoadingState
-                                      //     ? const CircularProgressIndicator()
-                                      //     : profileCubit.getChefData();
+                                     
+                                
                                     }
-                                    // profileCubit.updateProfile();
-                                    // state is UpdateProfileLoadingState
-                                    //       ? const Center(child: CircularProgressIndicator())
-                                    //       : profileCubit.getChefData();
                                   },
                                   style: ElevatedButton.styleFrom(
                                     fixedSize: Size(double.maxFinite, 50.h),
